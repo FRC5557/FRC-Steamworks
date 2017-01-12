@@ -7,6 +7,7 @@ This repository contains the code used by Team 5557 (BB-R8ERS) during FRC Steamw
 - Make sure to commit and push all changes to GitHub
 - Before editing any code, notify the Slack programming chat regarding which files you are working on
 - Remember that two people cannot be working on one file at the same time - this causes GitHub to be confused and throw errors
+- Make sure to use GitHub features such as the issue tracker
 
 ## Importing Project into Eclipse
 1. Make sure you have the WPILib Java Eclipse plugins installed, follow the instructions [here](https://wpilib.screenstepslive.com/s/4485/m/13503/l/599679-installing-eclipse-c-java)
@@ -16,3 +17,6 @@ This repository contains the code used by Team 5557 (BB-R8ERS) during FRC Steamw
 *Note: You may need to enter the team number if this is your first time setting up the project, which is `5557` in this case*
 
 - You should now have a properly setup project in your Eclipse workspace
+
+## Additional Notes
+- In-depth information on WPILib and the 2017 FRC Control System can be found [here](https://wpilib.screenstepslive.com/s/4485)
