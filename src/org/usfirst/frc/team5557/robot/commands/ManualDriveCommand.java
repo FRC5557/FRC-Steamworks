@@ -1,16 +1,19 @@
 package org.usfirst.frc.team5557.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team5557.robot.Robot;
 
+import edu.wpi.first.wpilibj.command.Command;
+
 /**
- *
+ * Command for simple, manual driving
  */
-public class ExampleCommand extends Command {
-	public ExampleCommand() {
-		// Use requires() here to declare subsystem dependencies
-		requires(Robot.exampleSubsystem);
+public class ManualDriveCommand extends Command {
+
+	// Initializes the command with its name, as well as set DriveSubsystem to
+	// be required
+	public ManualDriveCommand() {
+		super("ManualDrive");
+		requires(Robot.drive);
 	}
 
 	// Called just before this Command runs the first time
