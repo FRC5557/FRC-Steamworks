@@ -7,6 +7,7 @@ import org.usfirst.frc.team5557.robot.OI;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -22,7 +23,10 @@ public class DriveSubsystem extends Subsystem {
 	private RobotDrive robotDrive = new RobotDrive(leftFront, leftRear, rightFront, rightRear);
 
 	public DriveSubsystem() {
-
+		robotDrive.setInvertedMotor(MotorType.kFrontLeft, false);
+		robotDrive.setInvertedMotor(MotorType.kRearLeft, false);
+		robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
+		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
 	}
 
 	@Override
@@ -36,8 +40,8 @@ public class DriveSubsystem extends Subsystem {
 		double magnitude = OI.driveStick.getMagnitude();
 		double direction = OI.driveStick.getDirectionDegrees();
 		double rotation = OI.driveStick.getZ();
-		// robotDrive.arcadeDrive(5*Y,rotation);
-		robotDrive.mecanumDrive_Polar(magnitude, direction, rotation);
-		// robotDrive.mecanumDrive_Cartesian(X,Y, rotation, 0);
+		//robotDrive.arcadeDrive(Y * .5, rotation);
+		//robotDrive.mecanumDrive_Polar(magnitude, direction, rotation);
+		robotDrive.mecanumDrive_Cartesian(X, Y, rotation, 0);
 	}
 }
