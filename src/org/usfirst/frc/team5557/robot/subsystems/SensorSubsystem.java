@@ -18,14 +18,21 @@ public class SensorSubsystem extends Subsystem {
 	private Encoder BR = new Encoder(RobotMap.ENCODER_BR_1, RobotMap.ENCODER_BR_2);
 
 	public SensorSubsystem() {
-
+		setPulse();
 	}
 
 	public void initDefaultCommand() {
 	}
-
+	public void setPulse(){
+		double DisPerPulse = (8* Math.PI)/40;//Encoders rated to send 20 pulses per revolution*channel(2 channels total) 1 Revolution is a linear distance equal to circumference of wheel
+		UL.setDistancePerPulse(DisPerPulse);
+		BL.setDistancePerPulse(DisPerPulse);
+		UR.setDistancePerPulse(DisPerPulse);
+		BR.setDistancePerPulse(DisPerPulse);
+	}
 	public double getUltra() {
-		return ultra.getRaw();
+		double sensitivity = 1;
+		return (ultra.getRaw()*sensitivity);
 	}
 
 	public void resetEncoders() {
