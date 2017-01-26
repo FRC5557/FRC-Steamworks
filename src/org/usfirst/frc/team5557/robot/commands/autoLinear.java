@@ -2,7 +2,7 @@ package org.usfirst.frc.team5557.robot.commands;
 
 import org.usfirst.frc.team5557.robot.Robot;
 
-import edu.wpi.first.wpilibj.Command;
+import edu.wpi.first.wpilibj.command.Command;
 /**
  * Basic Linear Movement in Autonomous
  */
