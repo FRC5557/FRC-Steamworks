@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import org.usfirst.frc.team5557.robot.subsystems.SensorSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,6 +21,7 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveSubsystem drive = new DriveSubsystem();
 	public static OI oi;
+	public static final SensorSubsystem sensor = new SensorSubsystem();
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
