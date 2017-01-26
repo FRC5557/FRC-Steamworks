@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	// Joysticks defined here
-	public Joystick driveStick = new Joystick(RobotMap.JOYSTICK_DRIVE);
+	public static final Joystick driveStick = new Joystick(0);
 
 	// Buttons defined here
 

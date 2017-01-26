@@ -1,8 +1,8 @@
 package org.usfirst.frc.team5557.robot.subsystems;
 
-import org.usfirst.frc.team5557.robot.Robot;
 import org.usfirst.frc.team5557.robot.RobotMap;
-import org.usfirst.frc.team5557.robot.commands.ManualDriveCommand;
+import org.usfirst.frc.team5557.robot.commands.JoystickDriveCommand;
+import org.usfirst.frc.team5557.robot.OI;
 
 import com.ctre.CANTalon;
 
@@ -20,17 +20,22 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon rightRear = new CANTalon(RobotMap.RIGHT_REAR_MOTOR);
 
 	private RobotDrive robotDrive = new RobotDrive(leftFront, leftRear, rightFront, rightRear);
-
+	public DriveSubsystem(){
+		
+	}
 	@Override
 	public void initDefaultCommand() {
-		setDefaultCommand(new ManualDriveCommand());
+		setDefaultCommand(new JoystickDriveCommand());
 	}
 
 	public void drive() {
-		double magnitude = Robot.oi.driveStick.getMagnitude();
-		double direction = Robot.oi.driveStick.getDirectionDegrees();
-		double rotation = Robot.oi.driveStick.getTwist();
-
+		double X = OI.driveStick.getX();
+		double Y = OI.driveStick.getY();
+		double magnitude = OI.driveStick.getMagnitude();
+		double direction = OI.driveStick.getDirectionDegrees();
+		double rotation = OI.driveStick.getZ();
+		//robotDrive.arcadeDrive(5*Y,rotation);
 		robotDrive.mecanumDrive_Polar(magnitude, direction, rotation);
+		//robotDrive.mecanumDrive_Cartesian(X,Y, rotation, 0);
 	}
 }
