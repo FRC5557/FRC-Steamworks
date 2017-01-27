@@ -5,8 +5,9 @@ import org.usfirst.frc.team5557.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.PWM;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 
 /**
  * Subsystem containing all sensors for the robot
@@ -14,12 +15,9 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 public class SensorSubsystem extends Subsystem {
 	private PWM ultra = new PWM(RobotMap.PWM_CHANNEL);
 	private Ultrasonic ping_ultra = new Ultrasonic(RobotMap.ULTRA_CHANNEL_1,RobotMap.ULTRA_CHANNEL_2);
-	private Encoder UL = new Encoder(RobotMap.ENCODER_UL_1, RobotMap.ENCODER_UL_2);
-	private Encoder BL = new Encoder(RobotMap.ENCODER_BL_1, RobotMap.ENCODER_BL_2);
-	private Encoder UR = new Encoder(RobotMap.ENCODER_UR_1, RobotMap.ENCODER_UR_2);
-	private Encoder BR = new Encoder(RobotMap.ENCODER_BR_1, RobotMap.ENCODER_BR_2);
 
 	public SensorSubsystem() {
+		setEncoders();
 		setPulse();
 		ping_ultra.setEnabled(true);
 	}
@@ -28,16 +26,20 @@ public class SensorSubsystem extends Subsystem {
 	}
 
 	/**
-	 * Sets the approximate distance covered per received encoder pulse in Inches
+	 * Sets the number of expected pulses per revolution coming from encoders
 	 * Encoders rated to send 20 pulses per revolution*channel(2 channels total)
-	 * Distance per Pulse will equal circumference of wheel divided pulses per revolution
 	 */
 	public void setPulse(){
-		double DisPerPulse = (8* Math.PI)/40;
-		UL.setDistancePerPulse(DisPerPulse);
-		BL.setDistancePerPulse(DisPerPulse);
-		UR.setDistancePerPulse(DisPerPulse);
-		BR.setDistancePerPulse(DisPerPulse);
+		Robot.drive.getTalon("UL").configEncoderCodesPerRev(40);
+		Robot.drive.getTalon("BL").configEncoderCodesPerRev(40);
+		Robot.drive.getTalon("UR").configEncoderCodesPerRev(40);
+		Robot.drive.getTalon("BR").configEncoderCodesPerRev(40);
+	}
+	public void setEncoders(){
+		Robot.drive.getTalon("UL").setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		Robot.drive.getTalon("BL").setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		Robot.drive.getTalon("UR").setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		Robot.drive.getTalon("BR").setFeedbackDevice(FeedbackDevice.QuadEncoder);
 	}
 
 	/**
@@ -60,14 +62,21 @@ public class SensorSubsystem extends Subsystem {
 	}
 
 	public void resetEncoders() {
-		UL.reset();
-		BL.reset();
-		UR.reset();
-		BR.reset();
+		Robot.drive.getTalon("UL").setPosition(0);
+		Robot.drive.getTalon("BL").setPosition(0);
+		Robot.drive.getTalon("UR").setPosition(0);
+		Robot.drive.getTalon("BR").setPosition(0);
 	}
 
+	/**
+	 *Gets the position values from each Talon Feedback Device and averages them
+     */
 	public double getDis() {
-		double avgDis = (UL.getDistance() + BL.getDistance() + UR.getDistance() + BR.getDistance()) / 4;
+		double UL = Robot.drive.getTalon("UL").getEncPosition();
+		double BL = Robot.drive.getTalon("BL").getEncPosition();
+		double UR = Robot.drive.getTalon("UR").getEncPosition();
+		double BR = Robot.drive.getTalon("BR").getEncPosition();
+		double avgDis = (UL+BL+UR+BR)/4;
 		return avgDis;
 	}
 }

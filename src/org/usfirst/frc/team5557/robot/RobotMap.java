@@ -20,12 +20,5 @@ public class RobotMap {
 	public static final int PWM_CHANNEL = 0;
 	public static final int ULTRA_CHANNEL_1 = 0;
 	public static final int ULTRA_CHANNEL_2 = 1;
-	public static final int ENCODER_UL_1 = 0;
-	public static final int ENCODER_UL_2 = 1;
-	public static final int ENCODER_BL_1 = 2;
-	public static final int ENCODER_BL_2 = 3;
-	public static final int ENCODER_UR_1 = 4;
-	public static final int ENCODER_UR_2 = 5;
-	public static final int ENCODER_BR_1 = 6;
-	public static final int ENCODER_BR_2 = 7;
+
 }

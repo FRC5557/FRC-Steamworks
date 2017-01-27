@@ -29,6 +29,24 @@ public class DriveSubsystem extends Subsystem {
 		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
 	}
 
+	/**
+	 * Accessor method for Talon Motor controllers. Used for encoders in SensorSubsystem
+     */
+	public CANTalon getTalon(String motor){
+		switch(motor) {
+			case "UL":
+				return this.leftFront;
+			case "BL":
+				return this.leftRear;
+			case "UR":
+				return this.rightFront;
+			case "BR":
+				return this.rightRear;
+			default:
+				return this.leftFront;
+		}
+	}
+
 	@Override
 	public void initDefaultCommand() {
 		setDefaultCommand(new ManualDriveCommand());
