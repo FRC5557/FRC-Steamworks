@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
  * Basic Linear Movement in Autonomous
  */
 public class autoLinear extends Command {
-    public autoLinear(){
+    private double dis;
+    public autoLinear(double my_dis){
+        dis = my_dis;
         requires(Robot.drive);
         requires(Robot.sensor);
     }
@@ -15,13 +17,10 @@ public class autoLinear extends Command {
         Robot.sensor.resetEncoders();
     }
     protected void execute(){
-        while(Robot.sensor.getDis()<200) {
-            Robot.drive.drive();
-        }
-
+        Robot.drive.manualDrive(.5,0);
     }
     protected boolean isFinished(){
-        if (Robot.sensor.getDis() <200){
+        if (Robot.sensor.getDis() <this.dis){
             return false;
         }
         else{

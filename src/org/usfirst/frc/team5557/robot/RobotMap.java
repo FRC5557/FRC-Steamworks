@@ -18,6 +18,8 @@ public class RobotMap {
 
 	// Sensors are mapped here
 	public static final int PWM_CHANNEL = 0;
+	public static final int ULTRA_CHANNEL_1 = 0;
+	public static final int ULTRA_CHANNEL_2 = 1;
 	public static final int ENCODER_UL_1 = 0;
 	public static final int ENCODER_UL_2 = 1;
 	public static final int ENCODER_BL_1 = 2;

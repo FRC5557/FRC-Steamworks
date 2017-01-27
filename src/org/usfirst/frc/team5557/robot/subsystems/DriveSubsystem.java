@@ -34,6 +34,13 @@ public class DriveSubsystem extends Subsystem {
 		setDefaultCommand(new ManualDriveCommand());
 	}
 
+	/**Set curve < 0 for left turn or curve > 0 for right turn.
+	 *Set curve = e^(-r/w) to get a turn radius r for wheelbase w of your robot.
+	 * Conversely, turn radius r = -ln(curve)*w for a given value of curve and wheelbase w.
+	 * **/
+	public void manualDrive(double magnitude, double curvature){
+		robotDrive.drive(magnitude,curvature);
+	}
 	public void drive() {
 		double X = OI.driveStick.getX();
 		double Y = OI.driveStick.getY();
