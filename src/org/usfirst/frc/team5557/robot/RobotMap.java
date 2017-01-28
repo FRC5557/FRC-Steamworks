@@ -9,6 +9,8 @@ package org.usfirst.frc.team5557.robot;
 public class RobotMap {
 	// Driver input devices are mapped here
 	public static int JOYSTICK_DRIVE = 0;
+	public static int PERCENT_DRIVE_BUTTON = 1;
+	public static int SPEED_DRIVE_BUTTON = 2;
 
 	// Motor controllers are mapped here
 	public static final int LEFT_FRONT_MOTOR = 1;

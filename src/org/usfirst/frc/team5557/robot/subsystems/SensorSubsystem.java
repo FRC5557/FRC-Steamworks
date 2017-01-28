@@ -37,9 +37,36 @@ public class SensorSubsystem extends Subsystem {
 	}
 	public void setEncoders(){
 		Robot.drive.getTalon("UL").setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		Robot.drive.getTalon("UL").reverseSensor(false);
+		Robot.drive.getTalon("UL").configNominalOutputVoltage(+0f,-0f);
+		Robot.drive.getTalon("UL").configPeakOutputVoltage(+12f,-12f);
+		Robot.drive.getTalon("UL").setProfile(0);
+		Robot.drive.getTalon("UL").setf(0.0);
+		Robot.drive.getTalon("UL").setPID(0.1,0.0,0.0);
+
 		Robot.drive.getTalon("BL").setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		Robot.drive.getTalon("BL").reverseSensor(false);
+		Robot.drive.getTalon("BL").configNominalOutputVoltage(+0f,-0f);
+		Robot.drive.getTalon("BL").configPeakOutputVoltage(+12f,-12f);
+		Robot.drive.getTalon("BL").setProfile(0);
+		Robot.drive.getTalon("BL").setf(0.0);
+		Robot.drive.getTalon("BL").setPID(0.1,0.0,0.0);
+
 		Robot.drive.getTalon("UR").setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		Robot.drive.getTalon("UR").reverseSensor(false);
+		Robot.drive.getTalon("UR").configNominalOutputVoltage(+0f,-0f);
+		Robot.drive.getTalon("UR").configPeakOutputVoltage(+12f,-12f);
+		Robot.drive.getTalon("UR").setProfile(0);
+		Robot.drive.getTalon("UR").setf(0.0);
+		Robot.drive.getTalon("UR").setPID(0.1,0.0,0.0);
+
 		Robot.drive.getTalon("BR").setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		Robot.drive.getTalon("BR").reverseSensor(false);
+		Robot.drive.getTalon("BR").configNominalOutputVoltage(+0f,-0f);
+		Robot.drive.getTalon("BR").configPeakOutputVoltage(+12f,-12f);
+		Robot.drive.getTalon("BR").setProfile(0);
+		Robot.drive.getTalon("BR").setf(0.0);
+		Robot.drive.getTalon("BR").setPID(0.1,0.0,0.0);
 	}
 
 	/**
