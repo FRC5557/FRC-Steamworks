@@ -3,7 +3,6 @@ package org.usfirst.frc.team5557.robot.subsystems;
 import org.usfirst.frc.team5557.robot.RobotMap;
 import org.usfirst.frc.team5557.robot.commands.ManualDriveCommand;
 import org.usfirst.frc.team5557.robot.OI;
-
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -31,7 +30,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	/**
-	 * Accessor method for Talon Motor controllers. Used for encoders in
+	 * Getter method for Talon Motor controllers. Used for encoders in
 	 * SensorSubsystem
 	 */
 	public CANTalon getTalon(String motor) {
@@ -92,11 +91,8 @@ public class DriveSubsystem extends Subsystem {
 	public void drive() {
 		double X = OI.driveStick.getX();
 		double Y = OI.driveStick.getY();
-		double magnitude = OI.driveStick.getMagnitude();
-		double direction = OI.driveStick.getDirectionDegrees();
 		double rotation = OI.driveStick.getZ();
-		// robotDrive.arcadeDrive(Y * .5, rotation);
-		// robotDrive.mecanumDrive_Polar(magnitude, direction, rotation);
+
 		robotDrive.mecanumDrive_Cartesian(X, Y, rotation, 0);
 	}
 }

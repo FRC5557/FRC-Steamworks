@@ -3,6 +3,7 @@ package org.usfirst.frc.team5557.robot;
 
 import org.usfirst.frc.team5557.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5557.robot.commands.AutoGroup;
+import org.usfirst.frc.team5557.robot.commands.DashboardDataCommand;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,7 +24,8 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveSubsystem drive = new DriveSubsystem();
 	public static OI oi;
-	public static final SensorSubsystem sensor = new SensorSubsystem();
+	public static final SensorSubsystem sensors = new SensorSubsystem();
+	private DashboardDataCommand data = new DashboardDataCommand();
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -38,6 +40,7 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", new AutoGroup());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		data.start();
 	}
 
 	/**

@@ -13,12 +13,12 @@ public class AutoLinearDriveCommand extends Command {
 	public AutoLinearDriveCommand(double my_dis) {
 		dis = my_dis;
 		requires(Robot.drive);
-		requires(Robot.sensor);
+		requires(Robot.sensors);
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.sensor.resetEncoders();
+		Robot.sensors.resetEncoders();
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class AutoLinearDriveCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		if (Robot.sensor.getDis() < this.dis) {
+		if (Robot.sensors.getDis() < this.dis) {
 			return false;
 		} else {
 			return true;

@@ -4,7 +4,7 @@ import org.usfirst.frc.team5557.robot.Robot;
 import org.usfirst.frc.team5557.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import com.ctre.CANTalon.FeedbackDevice;
 
@@ -12,17 +12,18 @@ import com.ctre.CANTalon.FeedbackDevice;
  * Subsystem containing all sensors for the robot
  */
 public class SensorSubsystem extends Subsystem {
-	private PWM ultra = new PWM(RobotMap.PWM_CHANNEL);
+	public AnalogInput ultra = new AnalogInput(RobotMap.ULTRA_ANALOG);
 	private Ultrasonic ping_ultra = new Ultrasonic(RobotMap.ULTRA_CHANNEL_1, RobotMap.ULTRA_CHANNEL_2);
 
 	public SensorSubsystem() {
 		setEncoders();
 		setPulse();
-		ping_ultra.setEnabled(true);
+		ping_ultra.setAutomaticMode(true);
 	}
 
 	@Override
 	public void initDefaultCommand() {
+		ping_ultra.setAutomaticMode(true);
 	}
 
 	/**
@@ -71,11 +72,10 @@ public class SensorSubsystem extends Subsystem {
 	}
 
 	/**
-	 * For Matbotix Ultrasonic
+	 * For MaxBotix Ultrasonic
 	 */
 	public double getUltra() {
-		double sensitivity = 1;
-		return (ultra.getRaw() * sensitivity);
+		return ultra.getVoltage() * RobotMap.MAXBOTIX_VOLTAGE_CONSTANT_MM;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class SensorSubsystem extends Subsystem {
 		double BL = Robot.drive.getTalon("BL").getEncPosition();
 		double UR = Robot.drive.getTalon("UR").getEncPosition();
 		double BR = Robot.drive.getTalon("BR").getEncPosition();
-		double avgDis = (UL + BL + UR + BR) / 4;
+		double avgDis = UR;
 		return avgDis;
 	}
 }

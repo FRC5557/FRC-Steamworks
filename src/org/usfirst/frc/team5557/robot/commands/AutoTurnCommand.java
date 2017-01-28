@@ -12,12 +12,12 @@ public class AutoTurnCommand extends Command {
 	public AutoTurnCommand(double my_angle) {
 		angle = my_angle;
 		requires(Robot.drive);
-		requires(Robot.sensor);
+		requires(Robot.sensors);
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.sensor.resetEncoders();
+		Robot.sensors.resetEncoders();
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class AutoTurnCommand extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		if (Robot.sensor.getDis() >= (this.angle / 360) * (8 * Math.PI)) {
+		if (Robot.sensors.getDis() >= (this.angle / 360) * (8 * Math.PI)) {
 			return true;
 		} else {
 			return false;
