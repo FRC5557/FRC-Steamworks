@@ -25,4 +25,5 @@ public class RobotMap {
 
 	// Additional constants are placed here
 	public static final double MAXBOTIX_VOLTAGE_CONSTANT_MM = 1024;
+	public static final double BASE_CURVATURE_CONSTANT = 20.36;
 }
