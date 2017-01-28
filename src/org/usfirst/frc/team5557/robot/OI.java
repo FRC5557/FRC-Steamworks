@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Button;
 import org.usfirst.frc.team5557.robot.RobotMap;
-import org.usfirst.frc.team5557.robot.commands.changeDrive;
-import org.usfirst.frc.team5557.robot.commands.autoLinear;
+import org.usfirst.frc.team5557.robot.commands.ChangeDriveCommand;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -15,12 +15,13 @@ public class OI {
 	public static final Joystick driveStick = new Joystick(RobotMap.JOYSTICK_DRIVE);
 
 	// Buttons defined here
-	public final Button PVDB = new JoystickButton(driveStick,RobotMap.PERCENT_DRIVE_BUTTON);
-	public final Button SDB = new JoystickButton(driveStick,RobotMap.SPEED_DRIVE_BUTTON);
+	public final Button percentDriveButton = new JoystickButton(driveStick, RobotMap.PERCENT_DRIVE_BUTTON);
+	public final Button speedDriveButton = new JoystickButton(driveStick, RobotMap.SPEED_DRIVE_BUTTON);
 
-
-	PVDB.whenPressed(new changeDrive("Percent"));
-	SDB.whenPressed(new changeDrive("Speed"));
+	public OI() {
+		percentDriveButton.whenPressed(new ChangeDriveCommand("Percent"));
+		speedDriveButton.whenPressed(new ChangeDriveCommand("Speed"));
+	}
 
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
