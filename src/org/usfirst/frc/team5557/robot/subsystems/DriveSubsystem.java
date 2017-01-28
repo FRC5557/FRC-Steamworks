@@ -84,7 +84,19 @@ public class DriveSubsystem extends Subsystem {
 	 * Conversely, turn radius r = -ln(curve)*w for a given value of curve and
 	 * wheelbase w.
 	 **/
-	public void manualDrive(double magnitude, double curvature) {
+	public void manualDrive(double magnitude, double radius, String direction) {
+		double curvature;
+		switch(direction){
+			case"Right":
+				curvature = Math.exp((-radius/20.36));
+			case "Left":
+				curvature = -Math.exp((-radius/20.36));
+			case"Straight":
+				curvature =0;
+			default:
+				curvature = 0;
+		}
+
 		robotDrive.drive(magnitude, curvature);
 	}
 
