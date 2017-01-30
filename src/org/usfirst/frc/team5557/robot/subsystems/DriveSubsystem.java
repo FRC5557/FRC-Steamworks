@@ -72,6 +72,12 @@ public class DriveSubsystem extends Subsystem {
 			this.rightRear.changeControlMode(TalonControlMode.PercentVbus);
 		}
 	}
+	public void setTargetDrive(double target){
+		this.leftFront.set(target);
+		this.leftRear.set(target);
+		this.rightFront.set(target);
+		this.rightRear.set(target);
+	}
 
 	@Override
 	public void initDefaultCommand() {

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5557.robot.subsystems;
 
+import org.usfirst.frc.team5557.robot.ADIS16448_IMU;
 import org.usfirst.frc.team5557.robot.Robot;
 import org.usfirst.frc.team5557.robot.RobotMap;
 
@@ -13,6 +14,7 @@ import com.ctre.CANTalon;
  */
 public class SensorSubsystem extends Subsystem {
 	public AnalogInput ultra = new AnalogInput(RobotMap.ULTRA_ANALOG);
+	public ADIS16448_IMU imu;
 
 
 	public SensorSubsystem() {
@@ -96,7 +98,21 @@ public class SensorSubsystem extends Subsystem {
 		double BL = Robot.drive.getTalon("BL").getEncPosition();
 		double UR = Robot.drive.getTalon("UR").getEncPosition();
 		double BR = Robot.drive.getTalon("BR").getEncPosition();
-		double avgDis = UR;
+		double avgDis = (UL+BL+UR+BR)/4;
 		return avgDis;
 	}
+	public double getSpeed(){
+		double UL = Robot.drive.getTalon("UL").getEncVel();
+		double BL = Robot.drive.getTalon("BL").getEncVel();
+		double UR = Robot.drive.getTalon("UR").getEncVel();
+		double BR = Robot.drive.getTalon("BR").getEncVel();
+		double avgSpeed = (UL+BL+UR+BR)/4;
+		return avgSpeed;
+	}
+
+	public double getAx(){return imu.getAccelX();}
+	public double getAy(){return imu.getAccelY();}
+	public double getGx(){return imu.getAngleX();}
+	public double getGy(){return imu.getAngleY();}
+	public ADIS16448_IMU getCompass(){return imu;}
 }

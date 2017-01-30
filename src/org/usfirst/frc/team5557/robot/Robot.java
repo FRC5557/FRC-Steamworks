@@ -4,7 +4,6 @@ package org.usfirst.frc.team5557.robot;
 import org.usfirst.frc.team5557.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5557.robot.commands.AutoGroup;
 import org.usfirst.frc.team5557.robot.commands.DashboardDataCommand;
-import org.usfirst.frc.team5557.robot.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -28,7 +27,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static final SensorSubsystem sensors = new SensorSubsystem();
 	private DashboardDataCommand data = new DashboardDataCommand();
-	public ADIS16448_IMU imu;
+
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -40,11 +39,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		imu = new ADIS16448_IMU();
 		chooser.addDefault("Default Auto", new AutoGroup());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putData("IMU",imu);
+
 		data.start();
 
 	}

@@ -20,10 +20,8 @@ public class RobotMap {
 
 	// Sensors are mapped here
 	public static final int ULTRA_ANALOG = 0;
-	public static final int ULTRA_CHANNEL_1 = 1;
-	public static final int ULTRA_CHANNEL_2 = 2;
 
 	// Additional constants are placed here
-	public static final double MAXBOTIX_VOLTAGE_CONSTANT_MM = 1024;
+	public static final double MAXBOTIX_VOLTAGE_CONSTANT_MM = 1024f;
 	public static final double BASE_CURVATURE_CONSTANT = 20.36;
 }
