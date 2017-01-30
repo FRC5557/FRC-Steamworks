@@ -14,7 +14,7 @@ import com.ctre.CANTalon;
  */
 public class SensorSubsystem extends Subsystem {
 	public AnalogInput ultra = new AnalogInput(RobotMap.ULTRA_ANALOG);
-	public ADIS16448_IMU imu;
+	public ADIS16448_IMU imu = new ADIS16448_IMU();
 
 
 	public SensorSubsystem() {
@@ -102,10 +102,10 @@ public class SensorSubsystem extends Subsystem {
 		return avgDis;
 	}
 	public double getSpeed(){
-		double UL = Robot.drive.getTalon("UL").getEncVel();
-		double BL = Robot.drive.getTalon("BL").getEncVel();
-		double UR = Robot.drive.getTalon("UR").getEncVel();
-		double BR = Robot.drive.getTalon("BR").getEncVel();
+		double UL = Robot.drive.getTalon("UL").getEncVelocity();
+		double BL = Robot.drive.getTalon("BL").getEncVelocity();
+		double UR = Robot.drive.getTalon("UR").getEncVelocity();
+		double BR = Robot.drive.getTalon("BR").getEncVelocity();
 		double avgSpeed = (UL+BL+UR+BR)/4;
 		return avgSpeed;
 	}
