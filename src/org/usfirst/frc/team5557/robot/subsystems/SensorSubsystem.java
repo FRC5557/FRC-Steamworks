@@ -78,19 +78,7 @@ public class SensorSubsystem extends Subsystem {
 		return ultra.getVoltage() * RobotMap.MAXBOTIX_VOLTAGE_CONSTANT_MM;
 	}
 
-	/**
-	 * For Vex Ping Response Ultrasonic
-	 */
-	public double getPingUltra(String type) {
-		switch (type) {
-		case "MM":
-			return ping_ultra.getRangeMM();
-		case "Inches":
-			return ping_ultra.getRangeInches();
-		default:
-			return ping_ultra.getRangeInches();
-		}
-	}
+	
 
 	public void resetEncoders() {
 		Robot.drive.getTalon("UL").setPosition(0);
