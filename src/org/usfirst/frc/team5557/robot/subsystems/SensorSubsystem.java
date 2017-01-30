@@ -5,25 +5,25 @@ import org.usfirst.frc.team5557.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon;
 
 /**
  * Subsystem containing all sensors for the robot
  */
 public class SensorSubsystem extends Subsystem {
 	public AnalogInput ultra = new AnalogInput(RobotMap.ULTRA_ANALOG);
-	private Ultrasonic ping_ultra = new Ultrasonic(RobotMap.ULTRA_CHANNEL_1, RobotMap.ULTRA_CHANNEL_2);
+
 
 	public SensorSubsystem() {
 		setEncoders();
 		setPulse();
-		ping_ultra.setAutomaticMode(true);
+
 	}
 
 	@Override
 	public void initDefaultCommand() {
-		ping_ultra.setAutomaticMode(true);
+
 	}
 
 	/**
