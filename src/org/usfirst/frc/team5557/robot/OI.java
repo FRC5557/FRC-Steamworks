@@ -1,10 +1,17 @@
 package org.usfirst.frc.team5557.robot;
 
+import org.usfirst.frc.team5557.robot.commands.ChangeDriveCommand;
+import org.usfirst.frc.team5557.robot.commands.ClimbCommand;
+import org.usfirst.frc.team5557.robot.commands.CollectCommand;
+import org.usfirst.frc.team5557.robot.commands.ShootCommand;
+import org.usfirst.frc.team5557.robot.commands.SoftEStopCommand;
+import org.usfirst.frc.team5557.robot.commands.StopClimbCommand;
+import org.usfirst.frc.team5557.robot.commands.StopCollectCommand;
+import org.usfirst.frc.team5557.robot.commands.StopShooterCommand;
+
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.team5557.robot.RobotMap;
-import org.usfirst.frc.team5557.robot.commands.*;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -17,13 +24,13 @@ public class OI {
 	// Buttons defined here
 	public final Button percentDriveButton = new JoystickButton(driveStick, RobotMap.PERCENT_DRIVE_BUTTON);
 	public final Button speedDriveButton = new JoystickButton(driveStick, RobotMap.SPEED_DRIVE_BUTTON);
-	public final Button shooterButton = new JoystickButton(driveStick,RobotMap.SHOOTER_BUTTON);
-	public final Button stopShooterButton = new JoystickButton(driveStick,RobotMap.STOP_SHOOTER_BUTTON);
-	public final Button climberButton = new JoystickButton(driveStick,RobotMap.CLIMBER_BUTTON);
-	public final Button stopClimberButton = new JoystickButton(driveStick,RobotMap.STOP_CLIMBER_BUTTON);
-	public final Button collectorButton = new JoystickButton(driveStick,RobotMap.COLLECTOR_BUTTON);
-	public final Button stopCollectorButton = new JoystickButton(driveStick,RobotMap.STOP_COLLECTOR_BUTTON);
-	public final Button eStopButton = new JoystickButton(driveStick,RobotMap.EMERGENCY_STOP_BUTTON);
+	public final Button shooterButton = new JoystickButton(driveStick, RobotMap.SHOOTER_BUTTON);
+	public final Button stopShooterButton = new JoystickButton(driveStick, RobotMap.STOP_SHOOTER_BUTTON);
+	public final Button climberButton = new JoystickButton(driveStick, RobotMap.CLIMBER_BUTTON);
+	public final Button stopClimberButton = new JoystickButton(driveStick, RobotMap.STOP_CLIMBER_BUTTON);
+	public final Button collectorButton = new JoystickButton(driveStick, RobotMap.COLLECTOR_BUTTON);
+	public final Button stopCollectorButton = new JoystickButton(driveStick, RobotMap.STOP_COLLECTOR_BUTTON);
+	public final Button eStopButton = new JoystickButton(driveStick, RobotMap.EMERGENCY_STOP_BUTTON);
 
 	public OI() {
 		percentDriveButton.whenPressed(new ChangeDriveCommand("Percent"));

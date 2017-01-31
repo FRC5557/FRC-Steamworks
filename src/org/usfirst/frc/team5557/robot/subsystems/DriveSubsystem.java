@@ -1,8 +1,9 @@
 package org.usfirst.frc.team5557.robot.subsystems;
 
+import org.usfirst.frc.team5557.robot.OI;
 import org.usfirst.frc.team5557.robot.RobotMap;
 import org.usfirst.frc.team5557.robot.commands.ManualDriveCommand;
-import org.usfirst.frc.team5557.robot.OI;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -72,7 +73,8 @@ public class DriveSubsystem extends Subsystem {
 			this.rightRear.changeControlMode(TalonControlMode.PercentVbus);
 		}
 	}
-	public void setTargetDrive(double target){
+
+	public void setTargetDrive(double target) {
 		this.leftFront.set(target);
 		this.leftRear.set(target);
 		this.rightFront.set(target);

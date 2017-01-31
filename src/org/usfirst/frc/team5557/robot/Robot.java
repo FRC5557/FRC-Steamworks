@@ -4,17 +4,17 @@ package org.usfirst.frc.team5557.robot;
 import org.usfirst.frc.team5557.robot.commands.AutoLeftGroup;
 import org.usfirst.frc.team5557.robot.commands.AutoRightGroup;
 import org.usfirst.frc.team5557.robot.commands.AutoStraightGroup;
-import org.usfirst.frc.team5557.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5557.robot.commands.DashboardDataCommand;
+import org.usfirst.frc.team5557.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team5557.robot.subsystems.MechanismSubsystem;
+import org.usfirst.frc.team5557.robot.subsystems.SensorSubsystem;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team5557.robot.subsystems.MechanismSubsystem;
-import org.usfirst.frc.team5557.robot.subsystems.SensorSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,10 +28,8 @@ public class Robot extends IterativeRobot {
 	public static final DriveSubsystem drive = new DriveSubsystem();
 	public static OI oi;
 	public static final SensorSubsystem sensors = new SensorSubsystem();
-	private DashboardDataCommand data = new DashboardDataCommand();
+	private Command data;
 	public static final MechanismSubsystem mechanisms = new MechanismSubsystem();
-	
-	
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -43,14 +41,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-	
+
 		chooser.addDefault("Default Auto", new AutoStraightGroup());
 		chooser.addObject("Left side Auto", new AutoLeftGroup());
-		chooser.addObject("Right side Auto",new AutoRightGroup());
+		chooser.addObject("Right side Auto", new AutoRightGroup());
 		SmartDashboard.putData("Auto mode", chooser);
-		
+		data = new DashboardDataCommand();
 		data.start();
-
 	}
 
 	/**
@@ -118,7 +115,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		
+
 		Scheduler.getInstance().run();
 	}
 

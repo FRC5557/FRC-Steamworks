@@ -21,7 +21,7 @@ public class DashboardDataCommand extends Command {
 	@Override
 	protected void execute() {
 		SmartDashboard.putNumber("MaxBotix Ultrasonic", Robot.sensors.getUltra());
-		SmartDashboard.putData("Compass",Robot.sensors.getCompass());
+		SmartDashboard.putData("Compass", Robot.sensors.getCompass());
 	}
 
 	@Override

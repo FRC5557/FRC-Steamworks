@@ -4,10 +4,10 @@ import org.usfirst.frc.team5557.robot.ADIS16448_IMU;
 import org.usfirst.frc.team5557.robot.Robot;
 import org.usfirst.frc.team5557.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.AnalogInput;
 import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Subsystem containing all sensors for the robot
@@ -15,7 +15,6 @@ import com.ctre.CANTalon;
 public class SensorSubsystem extends Subsystem {
 	public AnalogInput ultra = new AnalogInput(RobotMap.ULTRA_ANALOG);
 	public ADIS16448_IMU imu = new ADIS16448_IMU();
-
 
 	public SensorSubsystem() {
 		setEncoders();
@@ -80,8 +79,6 @@ public class SensorSubsystem extends Subsystem {
 		return ultra.getVoltage() * RobotMap.MAXBOTIX_VOLTAGE_CONSTANT_MM;
 	}
 
-	
-
 	public void resetEncoders() {
 		Robot.drive.getTalon("UL").setPosition(0);
 		Robot.drive.getTalon("BL").setPosition(0);
@@ -98,21 +95,36 @@ public class SensorSubsystem extends Subsystem {
 		double BL = Robot.drive.getTalon("BL").getEncPosition();
 		double UR = Robot.drive.getTalon("UR").getEncPosition();
 		double BR = Robot.drive.getTalon("BR").getEncPosition();
-		double avgDis = (UL+BL+UR+BR)/4;
+		double avgDis = (UL + BL + UR + BR) / 4;
 		return avgDis;
 	}
-	public double getSpeed(){
+
+	public double getSpeed() {
 		double UL = Robot.drive.getTalon("UL").getEncVelocity();
 		double BL = Robot.drive.getTalon("BL").getEncVelocity();
 		double UR = Robot.drive.getTalon("UR").getEncVelocity();
 		double BR = Robot.drive.getTalon("BR").getEncVelocity();
-		double avgSpeed = (UL+BL+UR+BR)/4;
+		double avgSpeed = (UL + BL + UR + BR) / 4;
 		return avgSpeed;
 	}
 
-	public double getAx(){return imu.getAccelX();}
-	public double getAy(){return imu.getAccelY();}
-	public double getGx(){return imu.getAngleX();}
-	public double getGy(){return imu.getAngleY();}
-	public ADIS16448_IMU getCompass(){return imu;}
+	public double getAx() {
+		return imu.getAccelX();
+	}
+
+	public double getAy() {
+		return imu.getAccelY();
+	}
+
+	public double getGx() {
+		return imu.getAngleX();
+	}
+
+	public double getGy() {
+		return imu.getAngleY();
+	}
+
+	public ADIS16448_IMU getCompass() {
+		return imu;
+	}
 }
