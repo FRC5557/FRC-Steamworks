@@ -1,8 +1,10 @@
 
 package org.usfirst.frc.team5557.robot;
 
+import org.usfirst.frc.team5557.robot.commands.AutoLeftGroup;
+import org.usfirst.frc.team5557.robot.commands.AutoRightGroup;
+import org.usfirst.frc.team5557.robot.commands.AutoStraightGroup;
 import org.usfirst.frc.team5557.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team5557.robot.commands.AutoGroup;
 import org.usfirst.frc.team5557.robot.commands.DashboardDataCommand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,6 +13,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team5557.robot.subsystems.MechanismSubsystem;
 import org.usfirst.frc.team5557.robot.subsystems.SensorSubsystem;
 
 /**
@@ -26,6 +29,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static final SensorSubsystem sensors = new SensorSubsystem();
 	private DashboardDataCommand data = new DashboardDataCommand();
+	public static final MechanismSubsystem mechanisms = new MechanismSubsystem();
 	
 	
 
@@ -40,8 +44,9 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 	
-		chooser.addDefault("Default Auto", new AutoGroup());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		chooser.addDefault("Default Auto", new AutoStraightGroup());
+		chooser.addObject("Left side Auto", new AutoLeftGroup());
+		chooser.addObject("Right side Auto",new AutoRightGroup());
 		SmartDashboard.putData("Auto mode", chooser);
 		
 		data.start();
