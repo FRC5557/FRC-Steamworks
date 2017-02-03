@@ -11,7 +11,12 @@ import org.usfirst.frc.team5557.robot.commands.StopShooterCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+<<<<<<< HEAD
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+=======
+import org.usfirst.frc.team5557.robot.RobotMap;
+import org.usfirst.frc.team5557.robot.commands.ChangeDriveCommand;
+>>>>>>> parent of 0fb289d... New subsystem/methods/commands for mechanisms and Base auto groups
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,6 +29,7 @@ public class OI {
 	// Buttons defined here
 	public final Button percentDriveButton = new JoystickButton(driveStick, RobotMap.PERCENT_DRIVE_BUTTON);
 	public final Button speedDriveButton = new JoystickButton(driveStick, RobotMap.SPEED_DRIVE_BUTTON);
+<<<<<<< HEAD
 	public final Button shooterButton = new JoystickButton(driveStick, RobotMap.SHOOTER_BUTTON);
 	public final Button stopShooterButton = new JoystickButton(driveStick, RobotMap.STOP_SHOOTER_BUTTON);
 	public final Button climberButton = new JoystickButton(driveStick, RobotMap.CLIMBER_BUTTON);
@@ -31,17 +37,12 @@ public class OI {
 	public final Button collectorButton = new JoystickButton(driveStick, RobotMap.COLLECTOR_BUTTON);
 	public final Button stopCollectorButton = new JoystickButton(driveStick, RobotMap.STOP_COLLECTOR_BUTTON);
 	public final Button eStopButton = new JoystickButton(driveStick, RobotMap.EMERGENCY_STOP_BUTTON);
+=======
+>>>>>>> parent of 0fb289d... New subsystem/methods/commands for mechanisms and Base auto groups
 
 	public OI() {
 		percentDriveButton.whenPressed(new ChangeDriveCommand("Percent"));
 		speedDriveButton.whenPressed(new ChangeDriveCommand("Speed"));
-		shooterButton.whenPressed(new ShootCommand());
-		stopShooterButton.whenPressed(new StopShooterCommand());
-		climberButton.whenPressed(new ClimbCommand());
-		stopClimberButton.whenPressed(new StopClimbCommand());
-		collectorButton.whenPressed(new CollectCommand());
-		stopCollectorButton.whenPressed(new StopCollectCommand());
-		eStopButton.whenPressed(new SoftEStopCommand());
 	}
 
 	//// CREATING BUTTONS
