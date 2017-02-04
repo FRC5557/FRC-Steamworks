@@ -47,7 +47,6 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Right side Auto", new AutoRightGroup());
 		SmartDashboard.putData("Auto mode", chooser);
 		data = new DashboardDataCommand();
-		data.start();
 	}
 
 	/**
@@ -90,6 +89,8 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		
+		data.start();
 	}
 
 	/**
@@ -108,6 +109,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
+		data.start();
 	}
 
 	/**
