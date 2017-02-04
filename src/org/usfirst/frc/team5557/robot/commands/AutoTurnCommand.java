@@ -2,6 +2,7 @@ package org.usfirst.frc.team5557.robot.commands;
 
 import org.usfirst.frc.team5557.robot.Robot;
 
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -37,7 +38,7 @@ public class AutoTurnCommand extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		if (Robot.sensors.getDis() >= (angle / 360) * (8 * Math.PI)) {
+		if (Robot.sensors.getDis(MotorType.kFrontLeft) >= (angle / 360) * (8 * Math.PI)) {
 			return true;
 		} else {
 			return false;
