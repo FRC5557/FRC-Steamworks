@@ -34,15 +34,15 @@ public class DriveSubsystem extends Subsystem {
 	 * Getter method for Talon Motor controllers. Used for encoders in
 	 * SensorSubsystem
 	 */
-	public CANTalon getTalon(String motor) {
+	public CANTalon getTalon(MotorType motor) {
 		switch (motor) {
-		case "UL":
+		case kFrontLeft:
 			return this.leftFront;
-		case "BL":
+		case kRearLeft:
 			return this.leftRear;
-		case "UR":
+		case kFrontRight:
 			return this.rightFront;
-		case "BR":
+		case kRearRight:
 			return this.rightRear;
 		default:
 			return this.leftFront;
