@@ -91,11 +91,11 @@ public class SensorSubsystem extends Subsystem {
 	 * them
 	 */
 	public double getDis() {
-		double UL = Robot.drive.getTalon("UL").getEncPosition();
+		//double UL = Robot.drive.getTalon("UL").getEncPosition();
 		double BL = Robot.drive.getTalon("BL").getEncPosition();
-		double UR = Robot.drive.getTalon("UR").getEncPosition();
-		double BR = Robot.drive.getTalon("BR").getEncPosition();
-		double avgDis = (UL + BL + UR + BR) / 4;
+		//double UR = Robot.drive.getTalon("UR").getEncPosition();
+		//double BR = Robot.drive.getTalon("BR").getEncPosition();
+		double avgDis = BL;
 		return avgDis;
 	}
 

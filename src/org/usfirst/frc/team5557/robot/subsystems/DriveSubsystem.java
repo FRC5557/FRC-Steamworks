@@ -1,15 +1,18 @@
 package org.usfirst.frc.team5557.robot.subsystems;
 
 import org.usfirst.frc.team5557.robot.OI;
+import org.usfirst.frc.team5557.robot.Robot;
 import org.usfirst.frc.team5557.robot.RobotMap;
 import org.usfirst.frc.team5557.robot.commands.ManualDriveCommand;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Subsystem which is simply the drive train of the robot
@@ -109,7 +112,9 @@ public class DriveSubsystem extends Subsystem {
 		double X = OI.driveStick.getX();
 		double Y = OI.driveStick.getY();
 		double rotation = OI.driveStick.getZ();
-
-		robotDrive.mecanumDrive_Cartesian(X, Y, rotation, 0);
+		SmartDashboard.putString("Sensor", this.getTalon("BR").isSensorPresent(FeedbackDevice.QuadEncoder).toString());
+		SmartDashboard.putNumber("Test", Robot.sensors.getDis());
+		//robotDrive.mecanumDrive_Cartesian(X, Y, rotation, 0);
+		robotDrive.arcadeDrive(rotation,Y/2.0);
 	}
 }

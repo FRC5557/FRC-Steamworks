@@ -9,6 +9,8 @@ import org.usfirst.frc.team5557.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5557.robot.subsystems.MechanismSubsystem;
 import org.usfirst.frc.team5557.robot.subsystems.SensorSubsystem;
 
+import com.ctre.CANTalon.FeedbackDevice;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -46,6 +48,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Left side Auto", new AutoLeftGroup());
 		chooser.addObject("Right side Auto", new AutoRightGroup());
 		SmartDashboard.putData("Auto mode", chooser);
+		sensors.setEncoders();
+		SmartDashboard.putNumber("RealTest", sensors.getDis());
 		data = new DashboardDataCommand();
 		data.start();
 	}
@@ -115,7 +119,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-
+		
 		Scheduler.getInstance().run();
 	}
 

@@ -14,7 +14,7 @@ public class MechanismSubsystem extends Subsystem {
 
 	private CANTalon shooter = new CANTalon(RobotMap.SHOOTER_MOTOR);
 	private CANTalon climber = new CANTalon(RobotMap.CLIMBER_MOTOR);
-	private CANTalon collector = new CANTalon(RobotMap.COLLECTOR_MOTOR);
+	
 
 	public MechanismSubsystem() {
 	}
@@ -29,8 +29,6 @@ public class MechanismSubsystem extends Subsystem {
 			shooter.set(speed);
 		case "Climber":
 			climber.set(speed);
-		case "Collector":
-			collector.set(speed);
 		default:
 		}
 	}
