@@ -48,10 +48,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Left side Auto", new AutoLeftGroup());
 		chooser.addObject("Right side Auto", new AutoRightGroup());
 		SmartDashboard.putData("Auto mode", chooser);
-		sensors.setEncoders();
-		SmartDashboard.putNumber("RealTest", sensors.getDis());
 		data = new DashboardDataCommand();
-		data.start();
 	}
 
 	/**
@@ -94,6 +91,8 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		
+		data.start();
 	}
 
 	/**
@@ -112,6 +111,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
+		data.start();
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5557.robot;
 
+import com.ctre.CANTalon.FeedbackDevice;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -30,6 +32,16 @@ public class RobotMap {
 
 	// Sensors are mapped here
 	public static final int ULTRA_ANALOG = 0;
+	
+	// Constants for encoders connected to Talon SRX
+	public static final int ENCODER_CODES_PER_REV = 40;
+	public static final FeedbackDevice TALON_FEEDBACK_DEVICE = FeedbackDevice.QuadEncoder;
+	public static final int ENCODER_PROFILE = 0;
+	public static final double PID_FEEDFORWARD = 0;
+	public static final double PID_PROPORTIONAL = 0.1;
+	public static final double PID_INTEGRAL = 0;
+	public static final double PID_DERIVATIVE = 0;
+	
 
 	// Additional constants are placed here
 	public static final double MAXBOTIX_VOLTAGE_CONSTANT_MM = 1024f;

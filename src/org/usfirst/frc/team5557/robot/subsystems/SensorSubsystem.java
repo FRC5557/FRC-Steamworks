@@ -4,9 +4,8 @@ import org.usfirst.frc.team5557.robot.ADIS16448_IMU;
 import org.usfirst.frc.team5557.robot.Robot;
 import org.usfirst.frc.team5557.robot.RobotMap;
 
-import com.ctre.CANTalon.FeedbackDevice;
-
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,61 +14,25 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class SensorSubsystem extends Subsystem {
 	public AnalogInput ultra = new AnalogInput(RobotMap.ULTRA_ANALOG);
 	public ADIS16448_IMU imu = new ADIS16448_IMU();
-
+	
 	public SensorSubsystem() {
-		setEncoders();
-		setPulse();
-
+		// Correctly initialize and set up encoders
+		for(MotorType m : MotorType.values()) {
+		/**	Robot.drive.getTalon(m).configEncoderCodesPerRev(RobotMap.ENCODER_CODES_PER_REV);
+			Robot.drive.getTalon(m).setFeedbackDevice(RobotMap.TALON_FEEDBACK_DEVICE);
+			Robot.drive.getTalon(m).reverseSensor(false);
+			Robot.drive.getTalon(m).configNominalOutputVoltage(+0f, -0f);
+			Robot.drive.getTalon(m).configPeakOutputVoltage(+12f, -12f);
+			Robot.drive.getTalon(m).setProfile(RobotMap.ENCODER_PROFILE);
+			Robot.drive.getTalon(m).setF(RobotMap.PID_FEEDFORWARD);
+			Robot.drive.getTalon(m).setPID(RobotMap.PID_PROPORTIONAL, RobotMap.PID_INTEGRAL, RobotMap.PID_DERIVATIVE);
+			**/
+		}
 	}
 
 	@Override
 	public void initDefaultCommand() {
 
-	}
-
-	/**
-	 * Sets the number of expected pulses per revolution coming from encoders
-	 * Encoders rated to send 20 pulses per revolution*channel(2 channels total)
-	 */
-	public void setPulse() {
-		Robot.drive.getTalon("UL").configEncoderCodesPerRev(40);
-		Robot.drive.getTalon("BL").configEncoderCodesPerRev(40);
-		Robot.drive.getTalon("UR").configEncoderCodesPerRev(40);
-		Robot.drive.getTalon("BR").configEncoderCodesPerRev(40);
-	}
-
-	public void setEncoders() {
-		Robot.drive.getTalon("UL").setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		Robot.drive.getTalon("UL").reverseSensor(false);
-		Robot.drive.getTalon("UL").configNominalOutputVoltage(+0f, -0f);
-		Robot.drive.getTalon("UL").configPeakOutputVoltage(+12f, -12f);
-		Robot.drive.getTalon("UL").setProfile(0);
-		Robot.drive.getTalon("UL").setF(0.0);
-		Robot.drive.getTalon("UL").setPID(0.1, 0.0, 0.0);
-
-		Robot.drive.getTalon("BL").setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		Robot.drive.getTalon("BL").reverseSensor(false);
-		Robot.drive.getTalon("BL").configNominalOutputVoltage(+0f, -0f);
-		Robot.drive.getTalon("BL").configPeakOutputVoltage(+12f, -12f);
-		Robot.drive.getTalon("BL").setProfile(0);
-		Robot.drive.getTalon("BL").setF(0.0);
-		Robot.drive.getTalon("BL").setPID(0.1, 0.0, 0.0);
-
-		Robot.drive.getTalon("UR").setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		Robot.drive.getTalon("UR").reverseSensor(false);
-		Robot.drive.getTalon("UR").configNominalOutputVoltage(+0f, -0f);
-		Robot.drive.getTalon("UR").configPeakOutputVoltage(+12f, -12f);
-		Robot.drive.getTalon("UR").setProfile(0);
-		Robot.drive.getTalon("UR").setF(0.0);
-		Robot.drive.getTalon("UR").setPID(0.1, 0.0, 0.0);
-
-		Robot.drive.getTalon("BR").setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		Robot.drive.getTalon("BR").reverseSensor(false);
-		Robot.drive.getTalon("BR").configNominalOutputVoltage(+0f, -0f);
-		Robot.drive.getTalon("BR").configPeakOutputVoltage(+12f, -12f);
-		Robot.drive.getTalon("BR").setProfile(0);
-		Robot.drive.getTalon("BR").setF(0.0);
-		Robot.drive.getTalon("BR").setPID(0.1, 0.0, 0.0);
 	}
 
 	/**
@@ -80,10 +43,9 @@ public class SensorSubsystem extends Subsystem {
 	}
 
 	public void resetEncoders() {
-		Robot.drive.getTalon("UL").setPosition(0);
-		Robot.drive.getTalon("BL").setPosition(0);
-		Robot.drive.getTalon("UR").setPosition(0);
-		Robot.drive.getTalon("BR").setPosition(0);
+		for(MotorType m : MotorType.values()) {
+			Robot.drive.getTalon(m).setPosition(0);
+		}
 	}
 
 	/**
@@ -92,20 +54,19 @@ public class SensorSubsystem extends Subsystem {
 	 */
 	public double getDis() {
 		//double UL = Robot.drive.getTalon("UL").getEncPosition();
-		double BL = Robot.drive.getTalon("BL").getEncPosition();
+		double BL = Robot.drive.getTalon(MotorType.kRearLeft).getEncPosition();
 		//double UR = Robot.drive.getTalon("UR").getEncPosition();
 		//double BR = Robot.drive.getTalon("BR").getEncPosition();
 		double avgDis = BL;
 		return avgDis;
+}
+
+	public double getDis(MotorType m) {
+		return Robot.drive.getTalon(m).getEncPosition();
 	}
 
-	public double getSpeed() {
-		double UL = Robot.drive.getTalon("UL").getEncVelocity();
-		double BL = Robot.drive.getTalon("BL").getEncVelocity();
-		double UR = Robot.drive.getTalon("UR").getEncVelocity();
-		double BR = Robot.drive.getTalon("BR").getEncVelocity();
-		double avgSpeed = (UL + BL + UR + BR) / 4;
-		return avgSpeed;
+	public double getSpeed(MotorType m) {
+		return Robot.drive.getTalon(m).getEncVelocity();
 	}
 
 	public double getAx() {
