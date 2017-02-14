@@ -19,6 +19,7 @@ public class RobotMap {
 	public static int STOP_CLIMBER_BUTTON = 6;
 	public static int COLLECTOR_BUTTON = 7;
 	public static int STOP_COLLECTOR_BUTTON = 8;
+	public static int REVERSE_CLIMBER_BUTTON = 3;
 	public static int EMERGENCY_STOP_BUTTON = 12;
 
 	// Motor controllers are mapped here
@@ -26,13 +27,12 @@ public class RobotMap {
 	public static final int LEFT_REAR_MOTOR = 3;
 	public static final int RIGHT_FRONT_MOTOR = 2;
 	public static final int RIGHT_REAR_MOTOR = 4;
-	public static final int SHOOTER_MOTOR = 7;
-	public static final int CLIMBER_MOTOR = 5;
-	
+	public static final int SHOOTER_MOTOR = 6;
+	public static final int CLIMBER_MOTOR = 7;
 
 	// Sensors are mapped here
 	public static final int ULTRA_ANALOG = 0;
-	
+
 	// Constants for encoders connected to Talon SRX
 	public static final int ENCODER_CODES_PER_REV = 40;
 	public static final FeedbackDevice TALON_FEEDBACK_DEVICE = FeedbackDevice.QuadEncoder;
@@ -41,7 +41,6 @@ public class RobotMap {
 	public static final double PID_PROPORTIONAL = 0.1;
 	public static final double PID_INTEGRAL = 0;
 	public static final double PID_DERIVATIVE = 0;
-	
 
 	// Additional constants are placed here
 	public static final double MAXBOTIX_VOLTAGE_CONSTANT_MM = 1024f;

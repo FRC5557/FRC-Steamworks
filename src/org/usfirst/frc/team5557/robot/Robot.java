@@ -4,12 +4,10 @@ package org.usfirst.frc.team5557.robot;
 import org.usfirst.frc.team5557.robot.commands.AutoLeftGroup;
 import org.usfirst.frc.team5557.robot.commands.AutoRightGroup;
 import org.usfirst.frc.team5557.robot.commands.AutoStraightGroup;
-import org.usfirst.frc.team5557.robot.commands.DashboardDataCommand;
+import org.usfirst.frc.team5557.robot.commands.ChangeDriveCommand;
 import org.usfirst.frc.team5557.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5557.robot.subsystems.MechanismSubsystem;
 import org.usfirst.frc.team5557.robot.subsystems.SensorSubsystem;
-
-import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -30,7 +28,6 @@ public class Robot extends IterativeRobot {
 	public static final DriveSubsystem drive = new DriveSubsystem();
 	public static OI oi;
 	public static final SensorSubsystem sensors = new SensorSubsystem();
-	private Command data;
 	public static final MechanismSubsystem mechanisms = new MechanismSubsystem();
 
 	Command autonomousCommand;
@@ -48,7 +45,10 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Left side Auto", new AutoLeftGroup());
 		chooser.addObject("Right side Auto", new AutoRightGroup());
 		SmartDashboard.putData("Auto mode", chooser);
-		data = new DashboardDataCommand();
+		ChangeDriveCommand c = new ChangeDriveCommand("Percent"); // seems this
+																	// doesn't
+																	// execute.
+		c.execute();
 	}
 
 	/**
@@ -91,8 +91,6 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-		
-		data.start();
 	}
 
 	/**
@@ -111,8 +109,9 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		
-		data.start();
+
+		ChangeDriveCommand c = new ChangeDriveCommand("Percent");
+		c.execute();
 	}
 
 	/**
@@ -120,7 +119,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		
 		Scheduler.getInstance().run();
 	}
 

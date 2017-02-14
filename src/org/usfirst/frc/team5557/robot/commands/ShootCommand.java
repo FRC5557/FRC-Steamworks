@@ -27,7 +27,7 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.mechanisms.actMech("Shooter", 1);
+		Robot.mechanisms.shoot(1);
 		end = false;
 		if (timed) {
 			setTimeout(count);
@@ -36,7 +36,7 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.mechanisms.actMech("Shooter", 1);
+		Robot.mechanisms.shoot(1);
 	}
 
 	@Override
@@ -49,11 +49,11 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void interrupted() {
-		Robot.mechanisms.actMech("Shooter", 0);
+		Robot.mechanisms.shoot(0);
 	}
 
 	@Override
 	protected void end() {
-		Robot.mechanisms.actMech("Shooter", 0);
+		Robot.mechanisms.shoot(0);
 	}
 }

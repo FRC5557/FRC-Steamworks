@@ -14,7 +14,6 @@ public class MechanismSubsystem extends Subsystem {
 
 	private CANTalon shooter = new CANTalon(RobotMap.SHOOTER_MOTOR);
 	private CANTalon climber = new CANTalon(RobotMap.CLIMBER_MOTOR);
-	
 
 	public MechanismSubsystem() {
 	}
@@ -23,14 +22,12 @@ public class MechanismSubsystem extends Subsystem {
 	public void initDefaultCommand() {
 	}
 
-	public void actMech(String mech, double speed) {
-		switch (mech) {
-		case "Shooter":
-			shooter.set(speed);
-		case "Climber":
-			climber.set(speed);
-		default:
-		}
+	public void climb(double speed) {
+		climber.set(speed);
+	}
+
+	public void shoot(double speed) {
+		shooter.set(speed);
 	}
 
 }

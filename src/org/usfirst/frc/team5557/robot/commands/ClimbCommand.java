@@ -9,20 +9,23 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ClimbCommand extends Command {
 	public static boolean end;
+	private double speed;
 
-	public ClimbCommand() {
+	public ClimbCommand(double my_speed) {
 		requires(Robot.mechanisms);
 		end = false;
+		speed = my_speed;
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.mechanisms.actMech("Climber", 0);
+		Robot.mechanisms.climb(0);
+		end = false;
 	}
 
 	@Override
 	protected void execute() {
-		Robot.mechanisms.actMech("Climber", 1);
+		Robot.mechanisms.climb(speed);
 	}
 
 	@Override
@@ -32,11 +35,11 @@ public class ClimbCommand extends Command {
 
 	@Override
 	protected void interrupted() {
-		Robot.mechanisms.actMech("Climber", 0);
+		Robot.mechanisms.climb(0);
 	}
 
 	@Override
 	protected void end() {
-		Robot.mechanisms.actMech("Climber", 0);
+		Robot.mechanisms.climb(0);
 	}
 }

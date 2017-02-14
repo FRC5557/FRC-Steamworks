@@ -2,13 +2,10 @@ package org.usfirst.frc.team5557.robot;
 
 import org.usfirst.frc.team5557.robot.commands.ChangeDriveCommand;
 import org.usfirst.frc.team5557.robot.commands.ClimbCommand;
-import org.usfirst.frc.team5557.robot.commands.CollectCommand;
 import org.usfirst.frc.team5557.robot.commands.ShootCommand;
 import org.usfirst.frc.team5557.robot.commands.SoftEStopCommand;
 import org.usfirst.frc.team5557.robot.commands.StopClimbCommand;
-import org.usfirst.frc.team5557.robot.commands.StopCollectCommand;
 import org.usfirst.frc.team5557.robot.commands.StopShooterCommand;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -28,20 +25,18 @@ public class OI {
 	public final Button stopShooterButton = new JoystickButton(driveStick, RobotMap.STOP_SHOOTER_BUTTON);
 	public final Button climberButton = new JoystickButton(driveStick, RobotMap.CLIMBER_BUTTON);
 	public final Button stopClimberButton = new JoystickButton(driveStick, RobotMap.STOP_CLIMBER_BUTTON);
-	public final Button collectorButton = new JoystickButton(driveStick, RobotMap.COLLECTOR_BUTTON);
-	public final Button stopCollectorButton = new JoystickButton(driveStick, RobotMap.STOP_COLLECTOR_BUTTON);
 	public final Button eStopButton = new JoystickButton(driveStick, RobotMap.EMERGENCY_STOP_BUTTON);
+	public final Button reverseClimbButton = new JoystickButton(driveStick, RobotMap.REVERSE_CLIMBER_BUTTON);
 
 	public OI() {
 		percentDriveButton.whenPressed(new ChangeDriveCommand("Percent"));
-		speedDriveButton.whenPressed(new ChangeDriveCommand("Speed"));
+		speedDriveButton.whenPressed(new ChangeDriveCommand("Percent"));
 		shooterButton.whenPressed(new ShootCommand());
 		stopShooterButton.whenPressed(new StopShooterCommand());
-		climberButton.whenPressed(new ClimbCommand());
+		climberButton.whenPressed(new ClimbCommand(1));
 		stopClimberButton.whenPressed(new StopClimbCommand());
-		collectorButton.whenPressed(new CollectCommand());
-		stopCollectorButton.whenPressed(new StopCollectCommand());
 		eStopButton.whenPressed(new SoftEStopCommand());
+		reverseClimbButton.whenPressed(new ClimbCommand(-1));
 	}
 
 	//// CREATING BUTTONS

@@ -6,7 +6,6 @@ import org.usfirst.frc.team5557.robot.RobotMap;
 import org.usfirst.frc.team5557.robot.commands.ManualDriveCommand;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -31,6 +30,17 @@ public class DriveSubsystem extends Subsystem {
 		robotDrive.setInvertedMotor(MotorType.kRearLeft, false);
 		robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
 		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
+
+		// Set Talon SRX Control Modes
+		leftFront.changeControlMode(TalonControlMode.PercentVbus);
+		leftRear.changeControlMode(TalonControlMode.PercentVbus);
+		rightFront.changeControlMode(TalonControlMode.PercentVbus);
+		rightRear.changeControlMode(TalonControlMode.PercentVbus);
+
+		robotDrive.setSafetyEnabled(false); // This suppresses the 'Output not
+											// frequent enough' message but
+											// doens't fix the button problem.
+
 	}
 
 	/**
@@ -53,28 +63,29 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void switchMode(String mode) {
-		switch (mode) {
-		case "Position":
+		SmartDashboard.putString("DSS sM", mode);
+		if (mode.equals("Position")) {
 			this.leftFront.changeControlMode(TalonControlMode.Position);
 			this.leftRear.changeControlMode(TalonControlMode.Position);
 			this.rightFront.changeControlMode(TalonControlMode.Position);
 			this.rightRear.changeControlMode(TalonControlMode.Position);
-		case "Speed":
+		} else if (mode.equals("Speed")) {
 			this.leftFront.changeControlMode(TalonControlMode.Speed);
 			this.leftRear.changeControlMode(TalonControlMode.Speed);
 			this.rightFront.changeControlMode(TalonControlMode.Speed);
 			this.rightRear.changeControlMode(TalonControlMode.Speed);
-		case "Percent":
+		} else if (mode.equals("Percent")) {
 			this.leftFront.changeControlMode(TalonControlMode.PercentVbus);
 			this.leftRear.changeControlMode(TalonControlMode.PercentVbus);
 			this.rightFront.changeControlMode(TalonControlMode.PercentVbus);
 			this.rightRear.changeControlMode(TalonControlMode.PercentVbus);
-		default:
+		} else {
 			this.leftFront.changeControlMode(TalonControlMode.PercentVbus);
 			this.leftRear.changeControlMode(TalonControlMode.PercentVbus);
 			this.rightFront.changeControlMode(TalonControlMode.PercentVbus);
 			this.rightRear.changeControlMode(TalonControlMode.PercentVbus);
 		}
+
 	}
 
 	public void setTargetDrive(double target) {
@@ -108,12 +119,26 @@ public class DriveSubsystem extends Subsystem {
 		robotDrive.drive(magnitude, curvature);
 	}
 
+	/*
+	 * This method should contain all commands that output data to dashboard
+	 */
+	private void dashboardData() {
+		SmartDashboard.putNumber("MaxBotix Ultrasonic", Robot.sensors.getUltra());
+		SmartDashboard.putData("Compass", Robot.sensors.getCompass());
+		SmartDashboard.putNumber("Accel_Y", Robot.sensors.getAy());
+		SmartDashboard.putNumber("Accel_X", Robot.sensors.getAx());
+		SmartDashboard.putNumber("Gyro_X", Robot.sensors.getGx());
+		SmartDashboard.putNumber("Gyro_Y", Robot.sensors.getGy());
+		SmartDashboard.putNumber("Encoder FL", Robot.sensors.getDis(MotorType.kFrontLeft));
+		SmartDashboard.putNumber("Encoder FR", Robot.sensors.getDis(MotorType.kFrontRight));
+	}
+
 	public void drive() {
 		double X = OI.driveStick.getX();
 		double Y = OI.driveStick.getY();
 		double rotation = OI.driveStick.getZ();
-		SmartDashboard.putNumber("Test", Robot.sensors.getDis());
-		//robotDrive.mecanumDrive_Cartesian(X, Y, rotation, 0);
-		robotDrive.arcadeDrive(rotation,Y/2.0);
+		robotDrive.arcadeDrive(rotation, Y);
+
+		dashboardData();
 	}
 }
