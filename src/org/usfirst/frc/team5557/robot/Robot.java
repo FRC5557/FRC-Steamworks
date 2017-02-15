@@ -45,10 +45,6 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Left side Auto", new AutoLeftGroup());
 		chooser.addObject("Right side Auto", new AutoRightGroup());
 		SmartDashboard.putData("Auto mode", chooser);
-		ChangeDriveCommand c = new ChangeDriveCommand("Percent"); // seems this
-																	// doesn't
-																	// execute.
-		c.execute();
 	}
 
 	/**
@@ -109,9 +105,6 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
-		ChangeDriveCommand c = new ChangeDriveCommand("Percent");
-		c.execute();
 	}
 
 	/**

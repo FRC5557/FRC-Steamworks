@@ -33,14 +33,13 @@ public class DriveSubsystem extends Subsystem {
 
 		// Set up Talon SRXes
 		for (MotorType m : MotorType.values()) {
-			Robot.drive.getTalon(m).configNominalOutputVoltage(+RobotMap.NOMINAL_OUTPUT_VOLTAGE, -RobotMap.NOMINAL_OUTPUT_VOLTAGE);
-			Robot.drive.getTalon(m).configPeakOutputVoltage(+RobotMap.PEAK_OUTPUT_VOLTAGE, -RobotMap.PEAK_OUTPUT_VOLTAGE);
+			getTalon(m).configNominalOutputVoltage(+RobotMap.NOMINAL_OUTPUT_VOLTAGE, -RobotMap.NOMINAL_OUTPUT_VOLTAGE);
+			getTalon(m).configPeakOutputVoltage(+RobotMap.PEAK_OUTPUT_VOLTAGE, -RobotMap.PEAK_OUTPUT_VOLTAGE);
 		}
 
 		robotDrive.setSafetyEnabled(false); // This suppresses the 'Output not
 											// frequent enough' message but
 											// doens't fix the button problem.
-
 	}
 
 	/**

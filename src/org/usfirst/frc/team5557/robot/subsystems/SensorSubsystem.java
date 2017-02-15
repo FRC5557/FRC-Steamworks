@@ -1,8 +1,8 @@
 package org.usfirst.frc.team5557.robot.subsystems;
 
-import org.usfirst.frc.team5557.robot.ADIS16448_IMU;
 import org.usfirst.frc.team5557.robot.Robot;
 import org.usfirst.frc.team5557.robot.RobotMap;
+import org.usfirst.frc.team5557.robot.util.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
