@@ -8,38 +8,30 @@ import edu.wpi.first.wpilibj.command.Command;
  * Command for climbing mechanism
  */
 public class ClimbCommand extends Command {
-	public static boolean end;
 	private double speed;
 
-	public ClimbCommand(double my_speed) {
-		requires(Robot.mechanisms);
-		end = false;
-		speed = my_speed;
+	public ClimbCommand() {
+		requires(Robot.climber);
+		speed = 1;
 	}
 
-	@Override
-	protected void initialize() {
-		Robot.mechanisms.climb(0);
-		end = false;
+	public ClimbCommand(double speed) {
+		requires(Robot.climber);
+		this.speed = speed;
 	}
 
 	@Override
 	protected void execute() {
-		Robot.mechanisms.climb(speed);
+		Robot.climber.climb(speed);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return end;
-	}
-
-	@Override
-	protected void interrupted() {
-		Robot.mechanisms.climb(0);
+		return false;
 	}
 
 	@Override
 	protected void end() {
-		Robot.mechanisms.climb(0);
+		Robot.climber.stop();
 	}
 }

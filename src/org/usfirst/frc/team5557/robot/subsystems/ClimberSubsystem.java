@@ -7,16 +7,11 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * Subsystem which contains the main mechanisms including shooting, climbing,
- * and collecting
+ * Subsystem responsible for the climbing mechanism
  */
-public class MechanismSubsystem extends Subsystem {
+public class ClimberSubsystem extends Subsystem {
 
-	private CANTalon shooter = new CANTalon(RobotMap.SHOOTER_MOTOR);
 	private CANTalon climber = new CANTalon(RobotMap.CLIMBER_MOTOR);
-
-	public MechanismSubsystem() {
-	}
 
 	@Override
 	public void initDefaultCommand() {
@@ -26,8 +21,15 @@ public class MechanismSubsystem extends Subsystem {
 		climber.set(speed);
 	}
 
-	public void shoot(double speed) {
-		shooter.set(speed);
+	public void climbMax() {
+		climb(1);
 	}
 
+	public void wind(double speed) {
+		climb(speed);
+	}
+
+	public void stop() {
+		climb(0);
+	}
 }

@@ -29,7 +29,7 @@ public class UltraDriveCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		if (Robot.sensors.getUltra() <= this.dis) {
+		if (Robot.sensors.getUltra() <= dis) {
 			return true;
 		}
 		return false;

@@ -8,13 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Basic Linear Movement in Autonomous
  */
-public class AutoLinearDriveCommand extends Command {
-	private double dis;
+public class DriveForDistanceCommand extends Command {
+	private double distance;
 
-	public AutoLinearDriveCommand(double my_dis) {
-		dis = my_dis;
+	public DriveForDistanceCommand(double distance) {
 		requires(Robot.drive);
-		requires(Robot.sensors);
+		this.distance = distance;
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class AutoLinearDriveCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		if (Robot.sensors.getDis(MotorType.kFrontLeft) < this.dis) {
+		if (Robot.sensors.getDis(MotorType.kFrontLeft) <= distance) {
 			return false;
 		} else {
 			return true;
@@ -37,10 +36,7 @@ public class AutoLinearDriveCommand extends Command {
 	}
 
 	@Override
-	protected void interrupted() {
-	}
-
-	@Override
 	protected void end() {
+		Robot.drive.stop();
 	}
 }

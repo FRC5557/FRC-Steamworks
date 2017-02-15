@@ -1,13 +1,13 @@
 
 package org.usfirst.frc.team5557.robot;
 
-import org.usfirst.frc.team5557.robot.commands.AutoLeftGroup;
-import org.usfirst.frc.team5557.robot.commands.AutoRightGroup;
-import org.usfirst.frc.team5557.robot.commands.AutoStraightGroup;
-import org.usfirst.frc.team5557.robot.commands.ChangeDriveCommand;
+import org.usfirst.frc.team5557.robot.commands.autogroups.AutoLeftGroup;
+import org.usfirst.frc.team5557.robot.commands.autogroups.AutoRightGroup;
+import org.usfirst.frc.team5557.robot.commands.autogroups.AutoStraightGroup;
+import org.usfirst.frc.team5557.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team5557.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team5557.robot.subsystems.MechanismSubsystem;
 import org.usfirst.frc.team5557.robot.subsystems.SensorSubsystem;
+import org.usfirst.frc.team5557.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -28,7 +28,8 @@ public class Robot extends IterativeRobot {
 	public static final DriveSubsystem drive = new DriveSubsystem();
 	public static OI oi;
 	public static final SensorSubsystem sensors = new SensorSubsystem();
-	public static final MechanismSubsystem mechanisms = new MechanismSubsystem();
+	public static final ClimberSubsystem climber = new ClimberSubsystem();
+	public static final ShooterSubsystem shooter = new ShooterSubsystem();
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -41,10 +42,13 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 
-		chooser.addDefault("Default Auto", new AutoStraightGroup());
-		chooser.addObject("Left side Auto", new AutoLeftGroup());
-		chooser.addObject("Right side Auto", new AutoRightGroup());
-		SmartDashboard.putData("Auto mode", chooser);
+		chooser.addDefault("Middle DS Auto", new AutoStraightGroup(true));
+		chooser.addObject("Left DS Auto", new AutoLeftGroup(true));
+		chooser.addObject("Right DS Auto", new AutoRightGroup(true));
+		chooser.addObject("Middle DS No Shoot", new AutoStraightGroup(false));
+		chooser.addObject("Left DS No Shoot", new AutoLeftGroup(false));
+		chooser.addObject("Right DS No Shoot", new AutoRightGroup(false));
+		SmartDashboard.putData("Autonomous Programs", chooser);
 	}
 
 	/**
@@ -77,16 +81,10 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		autonomousCommand = chooser.getSelected();
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
+		// Schedule the autonomous command
+		if (autonomousCommand != null) {
 			autonomousCommand.start();
+		}
 	}
 
 	/**
@@ -103,8 +101,9 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
+		}
 	}
 
 	/**
@@ -121,6 +120,5 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
-
 	}
 }

@@ -14,9 +14,7 @@ public class RobotMap {
 	public static int PERCENT_DRIVE_BUTTON = 10;
 	public static int SPEED_DRIVE_BUTTON = 2;
 	public static int SHOOTER_BUTTON = 1;
-	public static int STOP_SHOOTER_BUTTON = 4;
 	public static int CLIMBER_BUTTON = 5;
-	public static int STOP_CLIMBER_BUTTON = 6;
 	public static int COLLECTOR_BUTTON = 7;
 	public static int STOP_COLLECTOR_BUTTON = 8;
 	public static int REVERSE_CLIMBER_BUTTON = 3;

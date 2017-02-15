@@ -277,7 +277,7 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 		// to be so the input and output never overlap (we hold a reference
 		// to the output while the lock is released).
 		m_samples = new Sample[kSamplesDepth + 2];
-		for (int i = 0; i < kSamplesDepth + 2; i++) {
+		for (int i = 0; i < (kSamplesDepth + 2); i++) {
 			m_samples[i] = new Sample();
 		}
 		m_samples_mutex = new ReentrantLock();
@@ -324,8 +324,9 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 	 */
 	@Override
 	public void calibrate() {
-		if (m_spi == null)
+		if (m_spi == null) {
 			return;
+		}
 
 		Timer.delay(0.1);
 
@@ -426,8 +427,9 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 			m_last_sample_time = Timer.getFPGATimestamp();
 		}
 		while (!m_freed.get()) {
-			if (m_interrupt.waitForInterrupt(kTimeout) == InterruptableSensorBase.WaitResult.kTimeout)
+			if (m_interrupt.waitForInterrupt(kTimeout) == InterruptableSensorBase.WaitResult.kTimeout) {
 				continue;
+			}
 
 			double sample_time = m_interrupt.readFallingTimestamp();
 			double dt;
@@ -448,12 +450,12 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 			double mag_y = resp.getShort(18) * kMilligaussPerLSB;
 			double mag_z = resp.getShort(20) * kMilligaussPerLSB;
 			double baro = resp.getShort(22) * kMillibarPerLSB;
-			double temp = resp.getShort(24) * kDegCPerLSB + kDegCOffset;
+			double temp = (resp.getShort(24) * kDegCPerLSB) + kDegCOffset;
 
 			m_samples_mutex.lock();
 			try {
 				// If the FIFO is full, just drop it
-				if (m_calculate_started && m_samples_count < kSamplesDepth) {
+				if (m_calculate_started && (m_samples_count < kSamplesDepth)) {
 					Sample sample = m_samples[m_samples_put_index];
 					sample.gyro_x = gyro_x;
 					sample.gyro_y = gyro_y;
@@ -565,8 +567,8 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 			double ay = sample.accel_y * kAccelScale;
 			double az = sample.accel_z * kAccelScale;
 			// Normalize accelerometer measurement
-			double norm = Math.sqrt(ax * ax + ay * ay + az * az);
-			if (norm > 0.3 && !excludeAccel) {
+			double norm = Math.sqrt((ax * ax) + (ay * ay) + (az * az));
+			if ((norm > 0.3) && !excludeAccel) {
 				// normal larger than the sensor noise floor during freefall
 				norm = 1.0 / norm;
 				ax *= norm;
@@ -583,7 +585,7 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 			double my = sample.mag_y * kMagScale;
 			double mz = sample.mag_z * kMagScale;
 			// Normalize magnetometer measurement
-			norm = Math.sqrt(mx * mx + my * my + mz * mz);
+			norm = Math.sqrt((mx * mx) + (my * my) + (mz * mz));
 			if (norm > 0.0) {
 				norm = 1.0 / norm;
 				mx *= norm;
@@ -616,39 +618,39 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 			double _2q1mz = 2 * q1 * mz;
 			double _2q2mx = 2 * q2 * mx;
 
-			double hx = mx * q1q1 - _2q1my * q4 + _2q1mz * q3 + mx * q2q2 + _2q2 * my * q3 + _2q2 * mz * q4 - mx * q3q3
-					- mx * q4q4;
-			double hy = _2q1mx * q4 + my * q1q1 - _2q1mz * q2 + _2q2mx * q3 - my * q2q2 + my * q3q3 + _2q3 * mz * q4
-					- my * q4q4;
-			double _2bx = Math.sqrt(hx * hx + hy * hy);
-			double _2bz = -_2q1mx * q3 + _2q1my * q2 + mz * q1q1 + _2q2mx * q4 - mz * q2q2 + _2q3 * my * q4 - mz * q3q3
-					+ mz * q4q4;
+			double hx = (((mx * q1q1) - (_2q1my * q4)) + (_2q1mz * q3) + (mx * q2q2) + (_2q2 * my * q3)
+					+ (_2q2 * mz * q4)) - (mx * q3q3) - (mx * q4q4);
+			double hy = ((((((_2q1mx * q4) + (my * q1q1)) - (_2q1mz * q2)) + (_2q2mx * q3)) - (my * q2q2)) + (my * q3q3)
+					+ (_2q3 * mz * q4)) - (my * q4q4);
+			double _2bx = Math.sqrt((hx * hx) + (hy * hy));
+			double _2bz = (((((-_2q1mx * q3) + (_2q1my * q2) + (mz * q1q1) + (_2q2mx * q4)) - (mz * q2q2))
+					+ (_2q3 * my * q4)) - (mz * q3q3)) + (mz * q4q4);
 			double _4bx = 2.0 * _2bx;
 			double _4bz = 2.0 * _2bz;
 			double _8bx = 2.0 * _4bx;
 			double _8bz = 2.0 * _4bz;
 
 			// Gradient descent algorithm corrective step
-			double s1 = -_2q3 * (2.0 * q2q4 - _2q1q3 - ax) + _2q2 * (2.0 * q1q2 + _2q3q4 - ay)
-					- _4bz * q3 * (_4bx * (0.5 - q3q3 - q4q4) + _4bz * (q2q4 - q1q3) - mx)
-					+ (-_4bx * q4 + _4bz * q2) * (_4bx * (q2q3 - q1q4) + _4bz * (q1q2 + q3q4) - my)
-					+ _4bx * q3 * (_4bx * (q1q3 + q2q4) + _4bz * (0.5 - q2q2 - q3q3) - mz);
-			double s2 = _2q4 * (2.0 * q2q4 - _2q1q3 - ax) + _2q1 * (2.0 * q1q2 + _2q3q4 - ay)
-					- 4.0 * q2 * (1.0 - 2.0 * q2q2 - 2.0 * q3q3 - az)
-					+ _4bz * q4 * (_4bx * (0.5 - q3q3 - q4q4) + _4bz * (q2q4 - q1q3) - mx)
-					+ (_4bx * q3 + _4bz * q1) * (_4bx * (q2q3 - q1q4) + _4bz * (q1q2 + q3q4) - my)
-					+ (_4bx * q4 - _8bz * q2) * (_4bx * (q1q3 + q2q4) + _4bz * (0.5 - q2q2 - q3q3) - mz);
-			double s3 = -_2q1 * (2.0 * q2q4 - _2q1q3 - ax) + _2q4 * (2.0 * q1q2 + _2q3q4 - ay)
-					- 4.0 * q3 * (1.0 - 2.0 * q2q2 - 2.0 * q3q3 - az)
-					+ (-_8bx * q3 - _4bz * q1) * (_4bx * (0.5 - q3q3 - q4q4) + _4bz * (q2q4 - q1q3) - mx)
-					+ (_4bx * q2 + _4bz * q4) * (_4bx * (q2q3 - q1q4) + _4bz * (q1q2 + q3q4) - my)
-					+ (_4bx * q1 - _8bz * q3) * (_4bx * (q1q3 + q2q4) + _4bz * (0.5 - q2q2 - q3q3) - mz);
-			double s4 = _2q2 * (2.0 * q2q4 - _2q1q3 - ax) + _2q3 * (2.0 * q1q2 + _2q3q4 - ay)
-					+ (-_8bx * q4 + _4bz * q2) * (_4bx * (0.5 - q3q3 - q4q4) + _4bz * (q2q4 - q1q3) - mx)
-					+ (-_4bx * q1 + _4bz * q3) * (_4bx * (q2q3 - q1q4) + _4bz * (q1q2 + q3q4) - my)
-					+ _4bx * q2 * (_4bx * (q1q3 + q2q4) + _4bz * (0.5 - q2q2 - q3q3) - mz);
+			double s1 = (((-_2q3 * ((2.0 * q2q4) - _2q1q3 - ax)) + (_2q2 * (((2.0 * q1q2) + _2q3q4) - ay)))
+					- (_4bz * q3 * (((_4bx * (0.5 - q3q3 - q4q4)) + (_4bz * (q2q4 - q1q3))) - mx)))
+					+ (((-_4bx * q4) + (_4bz * q2)) * (((_4bx * (q2q3 - q1q4)) + (_4bz * (q1q2 + q3q4))) - my))
+					+ (_4bx * q3 * (((_4bx * (q1q3 + q2q4)) + (_4bz * (0.5 - q2q2 - q3q3))) - mz));
+			double s2 = (((_2q4 * ((2.0 * q2q4) - _2q1q3 - ax)) + (_2q1 * (((2.0 * q1q2) + _2q3q4) - ay)))
+					- (4.0 * q2 * (1.0 - (2.0 * q2q2) - (2.0 * q3q3) - az)))
+					+ (_4bz * q4 * (((_4bx * (0.5 - q3q3 - q4q4)) + (_4bz * (q2q4 - q1q3))) - mx))
+					+ (((_4bx * q3) + (_4bz * q1)) * (((_4bx * (q2q3 - q1q4)) + (_4bz * (q1q2 + q3q4))) - my))
+					+ (((_4bx * q4) - (_8bz * q2)) * (((_4bx * (q1q3 + q2q4)) + (_4bz * (0.5 - q2q2 - q3q3))) - mz));
+			double s3 = (((-_2q1 * ((2.0 * q2q4) - _2q1q3 - ax)) + (_2q4 * (((2.0 * q1q2) + _2q3q4) - ay)))
+					- (4.0 * q3 * (1.0 - (2.0 * q2q2) - (2.0 * q3q3) - az)))
+					+ (((-_8bx * q3) - (_4bz * q1)) * (((_4bx * (0.5 - q3q3 - q4q4)) + (_4bz * (q2q4 - q1q3))) - mx))
+					+ (((_4bx * q2) + (_4bz * q4)) * (((_4bx * (q2q3 - q1q4)) + (_4bz * (q1q2 + q3q4))) - my))
+					+ (((_4bx * q1) - (_8bz * q3)) * (((_4bx * (q1q3 + q2q4)) + (_4bz * (0.5 - q2q2 - q3q3))) - mz));
+			double s4 = (_2q2 * ((2.0 * q2q4) - _2q1q3 - ax)) + (_2q3 * (((2.0 * q1q2) + _2q3q4) - ay))
+					+ (((-_8bx * q4) + (_4bz * q2)) * (((_4bx * (0.5 - q3q3 - q4q4)) + (_4bz * (q2q4 - q1q3))) - mx))
+					+ (((-_4bx * q1) + (_4bz * q3)) * (((_4bx * (q2q3 - q1q4)) + (_4bz * (q1q2 + q3q4))) - my))
+					+ (_4bx * q2 * (((_4bx * (q1q3 + q2q4)) + (_4bz * (0.5 - q2q2 - q3q3))) - mz));
 
-			norm = Math.sqrt(s1 * s1 + s2 * s2 + s3 * s3 + s4 * s4);
+			norm = Math.sqrt((s1 * s1) + (s2 * s2) + (s3 * s3) + (s4 * s4));
 			if (norm > 0.0) {
 				norm = 1.0 / norm; // normalise gradient step
 				s1 *= norm;
@@ -665,10 +667,10 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 			double gz = sample.gyro_z * kGyroScale;
 
 			// Compute rate of change of quaternion
-			double qDot1 = 0.5 * (-q2 * gx - q3 * gy - q4 * gz) - kBeta * s1;
-			double qDot2 = 0.5 * (q1 * gx + q3 * gz - q4 * gy) - kBeta * s2;
-			double qDot3 = 0.5 * (q1 * gy - q2 * gz + q4 * gx) - kBeta * s3;
-			double qDot4 = 0.5 * (q1 * gz + q2 * gy - q3 * gx) - kBeta * s4;
+			double qDot1 = (0.5 * ((-q2 * gx) - (q3 * gy) - (q4 * gz))) - (kBeta * s1);
+			double qDot2 = (0.5 * (((q1 * gx) + (q3 * gz)) - (q4 * gy))) - (kBeta * s2);
+			double qDot3 = (0.5 * (((q1 * gy) - (q2 * gz)) + (q4 * gx))) - (kBeta * s3);
+			double qDot4 = (0.5 * (((q1 * gz) + (q2 * gy)) - (q3 * gx))) - (kBeta * s4);
 
 			// Integrate to yield quaternion
 			q1 += qDot1 * sample.dt;
@@ -676,7 +678,7 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 			q3 += qDot3 * sample.dt;
 			q4 += qDot4 * sample.dt;
 
-			norm = Math.sqrt(q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);
+			norm = Math.sqrt((q1 * q1) + (q2 * q2) + (q3 * q3) + (q4 * q4));
 			if (norm > 0.0) {
 				norm = 1.0 / norm; // normalise quaternion
 				q1 = q1 * norm;
@@ -687,21 +689,22 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 		} while (false);
 
 		// Convert quaternion to angles of rotation
-		double xi = -Math.atan2(2 * q2 * q3 - 2 * q1 * q4, 2 * (q1 * q1) + 2 * (q2 * q2) - 1);
-		double theta = -Math.asin(2 * q2 * q4 + 2 * q1 * q3);
-		double rho = Math.atan2(2 * q3 * q4 - 2 * q1 * q2, 2 * (q1 * q1) + 2 * (q4 * q4) - 1);
+		double xi = -Math.atan2((2 * q2 * q3) - (2 * q1 * q4), ((2 * (q1 * q1)) + (2 * (q2 * q2))) - 1);
+		double theta = -Math.asin((2 * q2 * q4) + (2 * q1 * q3));
+		double rho = Math.atan2((2 * q3 * q4) - (2 * q1 * q2), ((2 * (q1 * q1)) + (2 * (q4 * q4))) - 1);
 
 		// Convert angles from radians to degrees
-		xi = xi / Math.PI * 180.0;
-		theta = theta / Math.PI * 180.0;
-		rho = rho / Math.PI * 180.0;
+		xi = (xi / Math.PI) * 180.0;
+		theta = (theta / Math.PI) * 180.0;
+		rho = (rho / Math.PI) * 180.0;
 
 		// Adjust angles for inverted mount of MXP sensor
 		theta = -theta;
-		if (rho < 0)
+		if (rho < 0) {
 			rho = 180 - Math.abs(rho);
-		else
+		} else {
 			rho = Math.abs(rho) - 180;
+		}
 
 		// Update global state
 		synchronized (this) {
@@ -888,7 +891,7 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 		}
 
 		// Calculate mag angle in degrees
-		double mag_angle = Math.atan2(sample.mag_y, sample.mag_x) / Math.PI * 180.0;
+		double mag_angle = (Math.atan2(sample.mag_y, sample.mag_x) / Math.PI) * 180.0;
 
 		// Tilt compensation:
 		// see http://www.freescale.com/files/sensors/doc/app_note/AN3461.pdf
@@ -925,13 +928,13 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 
 		// Accel
 		double tilt_pitch_rad = Math.atan2(-sample.accel_x,
-				Math.sqrt(sample.accel_y * sample.accel_y + sample.accel_z * sample.accel_z));
-		double tilt_pitch = tilt_pitch_rad / Math.PI * 180.0;
+				Math.sqrt((sample.accel_y * sample.accel_y) + (sample.accel_z * sample.accel_z)));
+		double tilt_pitch = (tilt_pitch_rad / Math.PI) * 180.0;
 
 		double tilt_roll_rad = Math.atan2(sample.accel_y,
-				Math.sqrt(sample.accel_x * sample.accel_x * 0.01 + sample.accel_z * sample.accel_z)
+				Math.sqrt((sample.accel_x * sample.accel_x * 0.01) + (sample.accel_z * sample.accel_z))
 						* Math.signum(sample.accel_z));
-		double tilt_roll = tilt_roll_rad / Math.PI * 180.0;
+		double tilt_roll = (tilt_roll_rad / Math.PI) * 180.0;
 
 		// Mag
 		double tilt_yaw;
@@ -940,12 +943,12 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 			double cos_pitch = Math.cos(tilt_pitch_rad);
 			double sin_roll = Math.sin(tilt_roll_rad);
 			double cos_roll = Math.cos(tilt_roll_rad);
-			double mx2 = sample.mag_x * cos_pitch + sample.mag_z * sin_pitch;
-			double my2 = sample.mag_x * sin_roll * sin_pitch + sample.mag_y * cos_roll
-					- sample.mag_z * sin_roll * cos_pitch;
+			double mx2 = (sample.mag_x * cos_pitch) + (sample.mag_z * sin_pitch);
+			double my2 = ((sample.mag_x * sin_roll * sin_pitch) + (sample.mag_y * cos_roll))
+					- (sample.mag_z * sin_roll * cos_pitch);
 			// double mz2 = -sample.mag_x * cos_roll * sin_pitch + sample.mag_y
 			// * sin_roll + sample.mag_z * cos_roll * cos_pitch;
-			tilt_yaw = Math.atan2(my2, mx2) / Math.PI * 180.0;
+			tilt_yaw = (Math.atan2(my2, mx2) / Math.PI) * 180.0;
 		} else {
 			tilt_yaw = mag_angle;
 		}
@@ -983,9 +986,12 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 			m_gyro_z_prev = sample.gyro_z;
 			m_first = false;
 		}
-		roll = alpha_acc * (roll + sample.dt * (sample.gyro_x + m_gyro_x_prev) / 2.0) + (1 - alpha_acc) * tilt_roll;
-		pitch = alpha_acc * (pitch + sample.dt * (sample.gyro_y + m_gyro_y_prev) / 2.0) + (1 - alpha_acc) * tilt_pitch;
-		yaw = alpha_mag * (yaw + sample.dt * (sample.gyro_z + m_gyro_z_prev) / 2.0) + (1 - alpha_mag) * tilt_yaw;
+		roll = (alpha_acc * (roll + ((sample.dt * (sample.gyro_x + m_gyro_x_prev)) / 2.0)))
+				+ ((1 - alpha_acc) * tilt_roll);
+		pitch = (alpha_acc * (pitch + ((sample.dt * (sample.gyro_y + m_gyro_y_prev)) / 2.0)))
+				+ ((1 - alpha_acc) * tilt_pitch);
+		yaw = (alpha_mag * (yaw + ((sample.dt * (sample.gyro_z + m_gyro_z_prev)) / 2.0)))
+				+ ((1 - alpha_mag) * tilt_yaw);
 		m_gyro_x_prev = sample.gyro_x;
 		m_gyro_y_prev = sample.gyro_y;
 		m_gyro_z_prev = sample.gyro_z;
@@ -1003,8 +1009,9 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 	 */
 	@Override
 	public double getAngle() {
-		if (m_spi == null)
+		if (m_spi == null) {
 			return 0.0;
+		}
 		return getYaw();
 	}
 
@@ -1013,8 +1020,9 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 	 */
 	@Override
 	public double getRate() {
-		if (m_spi == null)
+		if (m_spi == null) {
 			return 0.0;
+		}
 		return getRateZ();
 	}
 

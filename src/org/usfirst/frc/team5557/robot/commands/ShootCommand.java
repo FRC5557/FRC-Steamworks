@@ -9,26 +9,32 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ShootCommand extends Command {
 	private double count;
+	private double speed;
+
 	private boolean timed;
-	public static boolean end;
 
 	public ShootCommand() {
-		requires(Robot.mechanisms);
+		requires(Robot.shooter);
 		timed = false;
-		end = false;
+		speed = 1;
 	}
 
-	public ShootCommand(double my_count) {
-		requires(Robot.mechanisms);
+	public ShootCommand(double count) {
+		requires(Robot.shooter);
 		timed = true;
-		end = false;
-		count = my_count;
+		this.count = count;
+		speed = 1;
+	}
+
+	public ShootCommand(double count, double speed) {
+		requires(Robot.shooter);
+		timed = true;
+		this.count = count;
+		this.speed = speed;
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.mechanisms.shoot(1);
-		end = false;
 		if (timed) {
 			setTimeout(count);
 		}
@@ -36,7 +42,7 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.mechanisms.shoot(1);
+		Robot.shooter.shoot(speed);
 	}
 
 	@Override
@@ -44,16 +50,11 @@ public class ShootCommand extends Command {
 		if (timed) {
 			return isTimedOut();
 		}
-		return end;
-	}
-
-	@Override
-	protected void interrupted() {
-		Robot.mechanisms.shoot(0);
+		return false;
 	}
 
 	@Override
 	protected void end() {
-		Robot.mechanisms.shoot(0);
+		Robot.shooter.stop();
 	}
 }

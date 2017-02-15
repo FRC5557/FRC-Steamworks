@@ -28,8 +28,7 @@ public class SensorSubsystem extends Subsystem {
 	}
 
 	@Override
-	public void initDefaultCommand() {
-
+	protected void initDefaultCommand() {
 	}
 
 	/**
@@ -82,6 +81,8 @@ public class SensorSubsystem extends Subsystem {
 		return imu.getAngleY();
 	}
 
+	// This method doens't seem to work properly
+	@Deprecated
 	public ADIS16448_IMU getCompass() {
 		return imu;
 	}

@@ -8,13 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Basic autonomous turning using Encoders
  */
-public class AutoTurnCommand extends Command {
+public class TurnForAngleCommand extends Command {
 	private double angle;
 
-	public AutoTurnCommand(double my_angle) {
-		angle = my_angle;
+	public TurnForAngleCommand(double angle) {
 		requires(Robot.drive);
-		requires(Robot.sensors);
+		this.angle = angle;
 	}
 
 	@Override
@@ -38,7 +37,7 @@ public class AutoTurnCommand extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		if (Robot.sensors.getDis(MotorType.kFrontLeft) >= (angle / 360) * (8 * Math.PI)) {
+		if (Robot.sensors.getDis(MotorType.kFrontLeft) >= ((angle / 360) * (8 * Math.PI))) {
 			return true;
 		} else {
 			return false;
@@ -46,10 +45,7 @@ public class AutoTurnCommand extends Command {
 	}
 
 	@Override
-	protected void interrupted() {
-	}
-
-	@Override
 	protected void end() {
+		Robot.drive.stop();
 	}
 }

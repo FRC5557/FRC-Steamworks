@@ -31,67 +31,45 @@ public class DriveSubsystem extends Subsystem {
 		robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
 		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
 
-		// Set up Talon SRXes
+		// Set up Talon SRX controllers
 		for (MotorType m : MotorType.values()) {
 			getTalon(m).configNominalOutputVoltage(+RobotMap.NOMINAL_OUTPUT_VOLTAGE, -RobotMap.NOMINAL_OUTPUT_VOLTAGE);
 			getTalon(m).configPeakOutputVoltage(+RobotMap.PEAK_OUTPUT_VOLTAGE, -RobotMap.PEAK_OUTPUT_VOLTAGE);
 		}
 
-		robotDrive.setSafetyEnabled(false); // This suppresses the 'Output not
-											// frequent enough' message but
-											// doens't fix the button problem.
+		// This suppresses the "Output not frequent enough" message
+		robotDrive.setSafetyEnabled(false);
 	}
 
 	/**
-	 * Getter method for Talon Motor controllers. Used for encoders in
+	 * Getter method for Talon SRX controllers. Used for encoders in
 	 * SensorSubsystem
 	 */
 	public CANTalon getTalon(MotorType motor) {
 		switch (motor) {
 		case kFrontLeft:
-			return this.leftFront;
+			return leftFront;
 		case kRearLeft:
-			return this.leftRear;
+			return leftRear;
 		case kFrontRight:
-			return this.rightFront;
+			return rightFront;
 		case kRearRight:
-			return this.rightRear;
+			return rightRear;
 		default:
-			return this.leftFront;
+			return leftFront;
 		}
 	}
 
-	public void switchMode(String mode) {
-		SmartDashboard.putString("DSS sM", mode);
-		if (mode.equals("Position")) {
-			this.leftFront.changeControlMode(TalonControlMode.Position);
-			this.leftRear.changeControlMode(TalonControlMode.Position);
-			this.rightFront.changeControlMode(TalonControlMode.Position);
-			this.rightRear.changeControlMode(TalonControlMode.Position);
-		} else if (mode.equals("Speed")) {
-			this.leftFront.changeControlMode(TalonControlMode.Speed);
-			this.leftRear.changeControlMode(TalonControlMode.Speed);
-			this.rightFront.changeControlMode(TalonControlMode.Speed);
-			this.rightRear.changeControlMode(TalonControlMode.Speed);
-		} else if (mode.equals("Percent")) {
-			this.leftFront.changeControlMode(TalonControlMode.PercentVbus);
-			this.leftRear.changeControlMode(TalonControlMode.PercentVbus);
-			this.rightFront.changeControlMode(TalonControlMode.PercentVbus);
-			this.rightRear.changeControlMode(TalonControlMode.PercentVbus);
-		} else {
-			this.leftFront.changeControlMode(TalonControlMode.PercentVbus);
-			this.leftRear.changeControlMode(TalonControlMode.PercentVbus);
-			this.rightFront.changeControlMode(TalonControlMode.PercentVbus);
-			this.rightRear.changeControlMode(TalonControlMode.PercentVbus);
+	public void switchMode(TalonControlMode mode) {
+		for (MotorType m : MotorType.values()) {
+			getTalon(m).changeControlMode(mode);
 		}
-
 	}
 
-	public void setTargetDrive(double target) {
-		this.leftFront.set(target);
-		this.leftRear.set(target);
-		this.rightFront.set(target);
-		this.rightRear.set(target);
+	public void setDriveTarget(double target) {
+		for (MotorType m : MotorType.values()) {
+			getTalon(m).set(target);
+		}
 	}
 
 	@Override
@@ -118,6 +96,10 @@ public class DriveSubsystem extends Subsystem {
 		robotDrive.drive(magnitude, curvature);
 	}
 
+	public void stop() {
+		manualDrive(0, 0);
+	}
+
 	/*
 	 * This method should contain all commands that output data to dashboard
 	 */
@@ -132,9 +114,10 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void drive() {
-		double X = OI.driveStick.getX();
+		// double X = OI.driveStick.getX();
 		double Y = OI.driveStick.getY();
 		double rotation = OI.driveStick.getZ();
+		// TODO: implement mechanum?
 		robotDrive.arcadeDrive(rotation, Y);
 
 		dashboardData();
