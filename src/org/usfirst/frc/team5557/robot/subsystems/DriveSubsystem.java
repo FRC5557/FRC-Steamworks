@@ -31,11 +31,11 @@ public class DriveSubsystem extends Subsystem {
 		robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
 		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
 
-		// Set Talon SRX Control Modes
-		leftFront.changeControlMode(TalonControlMode.PercentVbus);
-		leftRear.changeControlMode(TalonControlMode.PercentVbus);
-		rightFront.changeControlMode(TalonControlMode.PercentVbus);
-		rightRear.changeControlMode(TalonControlMode.PercentVbus);
+		// Set up Talon SRXes
+		for (MotorType m : MotorType.values()) {
+			Robot.drive.getTalon(m).configNominalOutputVoltage(+RobotMap.NOMINAL_OUTPUT_VOLTAGE, -RobotMap.NOMINAL_OUTPUT_VOLTAGE);
+			Robot.drive.getTalon(m).configPeakOutputVoltage(+RobotMap.PEAK_OUTPUT_VOLTAGE, -RobotMap.PEAK_OUTPUT_VOLTAGE);
+		}
 
 		robotDrive.setSafetyEnabled(false); // This suppresses the 'Output not
 											// frequent enough' message but
@@ -124,7 +124,6 @@ public class DriveSubsystem extends Subsystem {
 	 */
 	private void dashboardData() {
 		SmartDashboard.putNumber("MaxBotix Ultrasonic", Robot.sensors.getUltra());
-		SmartDashboard.putData("Compass", Robot.sensors.getCompass());
 		SmartDashboard.putNumber("Accel_Y", Robot.sensors.getAy());
 		SmartDashboard.putNumber("Accel_X", Robot.sensors.getAx());
 		SmartDashboard.putNumber("Gyro_X", Robot.sensors.getGx());

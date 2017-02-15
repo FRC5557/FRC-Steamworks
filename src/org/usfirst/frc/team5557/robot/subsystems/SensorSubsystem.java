@@ -17,20 +17,14 @@ public class SensorSubsystem extends Subsystem {
 
 	public SensorSubsystem() {
 		// Correctly initialize and set up encoders
-		/**
-		 * for(MotorType m : MotorType.values()) {
-		 * Robot.drive.getTalon(m).configEncoderCodesPerRev(RobotMap.ENCODER_CODES_PER_REV);
-		 * Robot.drive.getTalon(m).setFeedbackDevice(RobotMap.TALON_FEEDBACK_DEVICE);
-		 * Robot.drive.getTalon(m).reverseSensor(false);
-		 * Robot.drive.getTalon(m).configNominalOutputVoltage(+0f, -0f);
-		 * Robot.drive.getTalon(m).configPeakOutputVoltage(+12f, -12f);
-		 * Robot.drive.getTalon(m).setProfile(RobotMap.ENCODER_PROFILE);
-		 * Robot.drive.getTalon(m).setF(RobotMap.PID_FEEDFORWARD);
-		 * Robot.drive.getTalon(m).setPID(RobotMap.PID_PROPORTIONAL,
-		 * RobotMap.PID_INTEGRAL, RobotMap.PID_DERIVATIVE);
-		 * 
-		 * }
-		 **/
+		for (MotorType m : MotorType.values()) {
+			Robot.drive.getTalon(m).configEncoderCodesPerRev(RobotMap.ENCODER_CODES_PER_REV);
+			Robot.drive.getTalon(m).setFeedbackDevice(RobotMap.TALON_FEEDBACK_DEVICE);
+			Robot.drive.getTalon(m).reverseSensor(false);
+			Robot.drive.getTalon(m).setProfile(RobotMap.ENCODER_PROFILE);
+			Robot.drive.getTalon(m).setF(RobotMap.PID_FEEDFORWARD);
+			Robot.drive.getTalon(m).setPID(RobotMap.PID_PROPORTIONAL, RobotMap.PID_INTEGRAL, RobotMap.PID_DERIVATIVE);
+		}
 	}
 
 	@Override
