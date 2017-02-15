@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class AutoStraightGroup extends CommandGroup {
 	public AutoStraightGroup() {
-		addSequential(new UltraDriveCommand(1));// Drive towards peg up until
+		addSequential(new UltraDriveCommand(1000));// Drive towards peg up until
 												// certain distance
-		addSequential(new WaitCommand(100));// Extra time for gear to get on peg
-		addSequential(new AutoLinearDriveCommand(-1));// Reverse out of airship
+		//addSequential(new WaitCommand(100));// Extra time for gear to get on peg
+		//addSequential(new AutoLinearDriveCommand(-1));// Reverse out of airship
 														// spot
-		addSequential(new AutoTurnCommand(1));// Turn towards boiler
+		//addSequential(new AutoTurnCommand(1));// Turn towards boiler
 		/**
 		 * Vision bit
 		 */

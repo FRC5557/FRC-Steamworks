@@ -29,8 +29,7 @@ public class UltraDriveCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		if (Robot.sensors.getUltra() >= this.dis) {
-			Robot.drive.manualDrive(0, 0);
+		if (Robot.sensors.getUltra() <= this.dis) {
 			return true;
 		}
 		return false;
@@ -42,5 +41,6 @@ public class UltraDriveCommand extends Command {
 
 	@Override
 	protected void end() {
+		Robot.drive.manualDrive(0, 0);
 	}
 }

@@ -34,7 +34,7 @@ public class RobotMap {
 	public static final int ULTRA_ANALOG = 0;
 
 	// Constants for encoders connected to Talon SRX
-	public static final float PEAK_OUTPUT_VOLTAGE = 12f;
+	public static final float PEAK_OUTPUT_VOLTAGE = 9f;
 	public static final float NOMINAL_OUTPUT_VOLTAGE = 0f;
 	public static final int ENCODER_CODES_PER_REV = 40;
 	public static final FeedbackDevice TALON_FEEDBACK_DEVICE = FeedbackDevice.QuadEncoder;
