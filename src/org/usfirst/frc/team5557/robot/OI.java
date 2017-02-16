@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5557.robot;
 
+import org.usfirst.frc.team5557.robot.commands.AgigateCommand;
 import org.usfirst.frc.team5557.robot.commands.ChangeDriveCommand;
 import org.usfirst.frc.team5557.robot.commands.ClimbCommand;
 import org.usfirst.frc.team5557.robot.commands.ShootCommand;
@@ -26,6 +27,7 @@ public class OI {
 	public final Button climberButton = new JoystickButton(driveStick, RobotMap.CLIMBER_BUTTON);
 	public final Button eStopButton = new JoystickButton(driveStick, RobotMap.EMERGENCY_STOP_BUTTON);
 	public final Button reverseClimbButton = new JoystickButton(driveStick, RobotMap.REVERSE_CLIMBER_BUTTON);
+	public final Button agigateButton = new JoystickButton(driveStick, RobotMap.COLLECTOR_BUTTON);
 
 	public OI() {
 		percentDriveButton.whenPressed(new ChangeDriveCommand(TalonControlMode.PercentVbus));
@@ -33,6 +35,8 @@ public class OI {
 		// ChangeDriveCommand(TalonControlMode.Speed));
 
 		shooterButton.whileHeld(new ShootCommand());
+		agigateButton.whileHeld(new AgigateCommand());
+		
 		climberButton.whileHeld(new ClimbCommand());
 
 		eStopButton.whenPressed(new SoftEStopCommand());

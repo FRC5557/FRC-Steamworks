@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ShooterSubsystem extends Subsystem {
 
 	private CANTalon shooter = new CANTalon(RobotMap.SHOOTER_MOTOR);
+	private CANTalon collector = new CANTalon(RobotMap.COLLECTOR_MOTOR);
 
 	@Override
 	public void initDefaultCommand() {
@@ -28,5 +29,13 @@ public class ShooterSubsystem extends Subsystem {
 
 	public void stop() {
 		shoot(0);
+	}
+	
+	public void agitate(double speed) {
+		collector.set(Math.abs(speed));
+	}
+	
+	public void stopCollector() {
+		agitate(0);
 	}
 }

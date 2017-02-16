@@ -16,7 +16,6 @@ public class RobotMap {
 	public static int SHOOTER_BUTTON = 1;
 	public static int CLIMBER_BUTTON = 5;
 	public static int COLLECTOR_BUTTON = 7;
-	public static int STOP_COLLECTOR_BUTTON = 8;
 	public static int REVERSE_CLIMBER_BUTTON = 3;
 	public static int EMERGENCY_STOP_BUTTON = 12;
 
@@ -27,6 +26,7 @@ public class RobotMap {
 	public static final int RIGHT_REAR_MOTOR = 1;
 	public static final int SHOOTER_MOTOR = 6;
 	public static final int CLIMBER_MOTOR = 7;
+	public static final int COLLECTOR_MOTOR = 5;
 
 	// Sensors are mapped here
 	public static final int ULTRA_ANALOG = 0;
