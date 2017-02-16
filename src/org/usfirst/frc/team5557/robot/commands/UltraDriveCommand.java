@@ -24,7 +24,7 @@ public class UltraDriveCommand extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.drive.manualDrive(.5, 0);
+		Robot.drive.manualDrive(-.5, 0);
 	}
 
 	@Override
@@ -40,7 +40,8 @@ public class UltraDriveCommand extends Command {
 	}
 
 	@Override
+
 	protected void end() {
-		Robot.drive.manualDrive(0, 0);
+		Robot.drive.stop();
 	}
 }

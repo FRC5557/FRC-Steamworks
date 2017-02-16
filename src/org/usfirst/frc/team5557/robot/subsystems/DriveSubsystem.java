@@ -83,17 +83,17 @@ public class DriveSubsystem extends Subsystem {
 	 * Conversely, turn radius r = -ln(curve)*w for a given value of curve and
 	 * wheelbase w.
 	 **/
-	public void manualDrive(double magnitude, double radius) {
-		double abs_radius = Math.abs(radius);
+	public void manualDrive(double magnitude, double turn) {
+		/*double abs_radius = Math.abs(radius);
 		double curvature;
 
 		if (radius == 0) {
 			curvature = 0;
 		} else {
 			curvature = (radius / abs_radius) * Math.exp(-abs_radius / RobotMap.BASE_CURVATURE_CONSTANT);
-		}
-
-		robotDrive.drive(magnitude, curvature);
+		}*/
+		
+		robotDrive.arcadeDrive(magnitude, turn);
 	}
 
 	public void stop() {

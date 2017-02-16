@@ -1,10 +1,6 @@
 package org.usfirst.frc.team5557.robot;
 
-import org.usfirst.frc.team5557.robot.commands.AgigateCommand;
-import org.usfirst.frc.team5557.robot.commands.ChangeDriveCommand;
-import org.usfirst.frc.team5557.robot.commands.ClimbCommand;
-import org.usfirst.frc.team5557.robot.commands.ShootCommand;
-import org.usfirst.frc.team5557.robot.commands.SoftEStopCommand;
+import org.usfirst.frc.team5557.robot.commands.*;
 
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -29,6 +25,8 @@ public class OI {
 	public final Button reverseClimbButton = new JoystickButton(driveStick, RobotMap.REVERSE_CLIMBER_BUTTON);
 	public final Button agigateButton = new JoystickButton(driveStick, RobotMap.COLLECTOR_BUTTON);
 
+	public final Button deleteThisButton = new JoystickButton(driveStick, RobotMap.DELETE_THIS_BUTTON);
+	
 	public OI() {
 		percentDriveButton.whenPressed(new ChangeDriveCommand(TalonControlMode.PercentVbus));
 		// speedDriveButton.whenPressed(new
@@ -42,6 +40,8 @@ public class OI {
 		eStopButton.whenPressed(new SoftEStopCommand());
 
 		reverseClimbButton.whileHeld(new ClimbCommand(-1));
+		
+		deleteThisButton.whenPressed(new UltraDriveCommand(288));
 	}
 
 	//// CREATING BUTTONS

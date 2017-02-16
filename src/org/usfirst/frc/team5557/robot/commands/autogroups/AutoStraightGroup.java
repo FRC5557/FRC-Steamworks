@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoStraightGroup extends CommandGroup {
 	public AutoStraightGroup(boolean shoot) {
-		addSequential(new UltraDriveCommand(1000));// Drive towards peg up until
+		addSequential(new UltraDriveCommand(400));// Drive towards peg up until
 													// certain distance
 		// addSequential(new WaitCommand(100));// Extra time for gear to get on
 		// peg

@@ -1,13 +1,8 @@
 
 package org.usfirst.frc.team5557.robot;
 
-import org.usfirst.frc.team5557.robot.commands.autogroups.AutoLeftGroup;
-import org.usfirst.frc.team5557.robot.commands.autogroups.AutoRightGroup;
-import org.usfirst.frc.team5557.robot.commands.autogroups.AutoStraightGroup;
-import org.usfirst.frc.team5557.robot.subsystems.ClimberSubsystem;
-import org.usfirst.frc.team5557.robot.subsystems.DriveSubsystem;
-import org.usfirst.frc.team5557.robot.subsystems.SensorSubsystem;
-import org.usfirst.frc.team5557.robot.subsystems.ShooterSubsystem;
+import org.usfirst.frc.team5557.robot.commands.autogroups.*;
+import org.usfirst.frc.team5557.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -79,8 +74,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-
+		//autonomousCommand = chooser.getSelected();
+		autonomousCommand = new AutoStraightGroup(false);
 		// Schedule the autonomous command
 		if (autonomousCommand != null) {
 			autonomousCommand.start();

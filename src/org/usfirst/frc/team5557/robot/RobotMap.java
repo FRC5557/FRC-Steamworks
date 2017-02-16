@@ -18,14 +18,16 @@ public class RobotMap {
 	public static int COLLECTOR_BUTTON = 7;
 	public static int REVERSE_CLIMBER_BUTTON = 3;
 	public static int EMERGENCY_STOP_BUTTON = 12;
-
+	public static int DELETE_THIS_BUTTON = 8;
+		
 	// Motor controllers are mapped here
 	public static final int LEFT_FRONT_MOTOR = 4;
-	public static final int LEFT_REAR_MOTOR = 2;
+	public static final int LEFT_REAR_MOTOR = 7;
 	public static final int RIGHT_FRONT_MOTOR = 3;
 	public static final int RIGHT_REAR_MOTOR = 1;
+	
 	public static final int SHOOTER_MOTOR = 6;
-	public static final int CLIMBER_MOTOR = 7;
+	public static final int CLIMBER_MOTOR = 2;
 	public static final int COLLECTOR_MOTOR = 5;
 
 	// Sensors are mapped here
