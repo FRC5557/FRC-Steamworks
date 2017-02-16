@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team5557.robot;
 
+import org.usfirst.frc.team5557.robot.commands.DashboardDataCommand;
 import org.usfirst.frc.team5557.robot.commands.autogroups.*;
 import org.usfirst.frc.team5557.robot.subsystems.*;
 
@@ -27,6 +28,7 @@ public class Robot extends IterativeRobot {
 	public static final ShooterSubsystem shooter = new ShooterSubsystem();
 
 	Command autonomousCommand;
+	Command dashboardDataCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
@@ -44,6 +46,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Left DS No Shoot", new AutoLeftGroup(false));
 		chooser.addObject("Right DS No Shoot", new AutoRightGroup(false));
 		SmartDashboard.putData("Autonomous Programs", chooser);
+		
+		dashboardDataCommand = new DashboardDataCommand();
 	}
 
 	/**
@@ -80,6 +84,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 		}
+		dashboardDataCommand.start();
 	}
 
 	/**
@@ -99,6 +104,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		dashboardDataCommand.start();
 	}
 
 	/**

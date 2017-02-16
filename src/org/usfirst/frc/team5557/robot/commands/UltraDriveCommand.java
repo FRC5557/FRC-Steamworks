@@ -10,9 +10,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class UltraDriveCommand extends Command {
 	private double dis;
-
-	public UltraDriveCommand(double my_dis) {
+	private double speed;
+	public UltraDriveCommand(double my_dis, double mspeed) {
 		dis = my_dis;
+		speed = mspeed;
 		requires(Robot.sensors);
 		requires(Robot.drive);
 	}
@@ -24,7 +25,7 @@ public class UltraDriveCommand extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.drive.manualDrive(-.5, 0);
+		Robot.drive.manualDrive(-1*speed, 0);
 	}
 
 	@Override

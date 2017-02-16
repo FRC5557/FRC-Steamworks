@@ -41,7 +41,7 @@ public class OI {
 
 		reverseClimbButton.whileHeld(new ClimbCommand(-1));
 		
-		deleteThisButton.whenPressed(new UltraDriveCommand(288));
+		deleteThisButton.whenPressed(new UltraDriveCommand(400, .5));
 	}
 
 	//// CREATING BUTTONS

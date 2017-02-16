@@ -15,7 +15,7 @@ public class AutoLeftGroup extends CommandGroup {
 	public AutoLeftGroup(boolean shoot) {
 		addSequential(new DriveForDistanceCommand(100));// Drive forward
 		addSequential(new TurnForAngleCommand(1));// Turn towards peg
-		addSequential(new UltraDriveCommand(1));// Drive towards peg until
+		addSequential(new UltraDriveCommand(1, .5));// Drive towards peg until
 												// certain distance
 		addSequential(new WaitCommand(100));// Extra time to make sure gear gets
 											// on peg

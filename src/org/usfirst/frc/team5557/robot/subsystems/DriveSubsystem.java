@@ -22,15 +22,15 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon leftRear = new CANTalon(RobotMap.LEFT_REAR_MOTOR);
 	private CANTalon rightFront = new CANTalon(RobotMap.RIGHT_FRONT_MOTOR);
 	private CANTalon rightRear = new CANTalon(RobotMap.RIGHT_REAR_MOTOR);
-
+	public double ROTATIONCORRECTION = .2;
 	private RobotDrive robotDrive = new RobotDrive(leftFront, leftRear, rightFront, rightRear);
 
 	public DriveSubsystem() {
-		robotDrive.setInvertedMotor(MotorType.kFrontLeft, false);
-		robotDrive.setInvertedMotor(MotorType.kRearLeft, false);
+		robotDrive.setInvertedMotor(MotorType.kFrontLeft, true);
 		robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
+		robotDrive.setInvertedMotor(MotorType.kRearLeft, true);
 		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
-
+		
 		// Set up Talon SRX controllers
 		for (MotorType m : MotorType.values()) {
 			getTalon(m).configNominalOutputVoltage(+RobotMap.NOMINAL_OUTPUT_VOLTAGE, -RobotMap.NOMINAL_OUTPUT_VOLTAGE);
@@ -100,26 +100,25 @@ public class DriveSubsystem extends Subsystem {
 		manualDrive(0, 0);
 	}
 
-	/*
-	 * This method should contain all commands that output data to dashboard
-	 */
-	private void dashboardData() {
-		SmartDashboard.putNumber("MaxBotix Ultrasonic", Robot.sensors.getUltra());
-		SmartDashboard.putNumber("Accel_Y", Robot.sensors.getAy());
-		SmartDashboard.putNumber("Accel_X", Robot.sensors.getAx());
-		SmartDashboard.putNumber("Gyro_X", Robot.sensors.getGx());
-		SmartDashboard.putNumber("Gyro_Y", Robot.sensors.getGy());
-		SmartDashboard.putNumber("Encoder FL", Robot.sensors.getDis(MotorType.kFrontLeft));
-		SmartDashboard.putNumber("Encoder FR", Robot.sensors.getDis(MotorType.kFrontRight));
-	}
-
 	public void drive() {
-		// double X = OI.driveStick.getX();
-		double Y = OI.driveStick.getY();
+		double X = OI.driveStick.getX();
+		double Y = -OI.driveStick.getY();
 		double rotation = OI.driveStick.getZ();
-		// TODO: implement mechanum?
-		robotDrive.arcadeDrive(rotation, Y);
+		
+		double theta = -Math.atan2(Y, X) - (Math.PI/2);
+		
+		double direction = Math.toDegrees(theta);
+		
+		if(direction < 0) {
+			direction += 360;
+		}
+		
+		SmartDashboard.putNumber("Atan", -Math.atan2(Y, X));
+		SmartDashboard.putNumber("Theta", theta);
+		SmartDashboard.putNumber("Direction", direction);
 
-		dashboardData();
+		//robotDrive.mecanumDrive_Polar(Math.sqrt(Math.pow(X, 2) + Math.pow(Y, 2)), direction, rotation);
+		robotDrive.arcadeDrive(-Y, rotation + .5*OI.driveStick.getThrottle());
+		SmartDashboard.putNumber("Slider", .5*OI.driveStick.getThrottle());
 	}
 }
