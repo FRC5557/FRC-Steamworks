@@ -24,8 +24,6 @@ public class OI {
 	public final Button eStopButton = new JoystickButton(driveStick, RobotMap.EMERGENCY_STOP_BUTTON);
 	public final Button reverseClimbButton = new JoystickButton(driveStick, RobotMap.REVERSE_CLIMBER_BUTTON);
 	public final Button agigateButton = new JoystickButton(driveStick, RobotMap.COLLECTOR_BUTTON);
-
-	public final Button deleteThisButton = new JoystickButton(driveStick, RobotMap.DELETE_THIS_BUTTON);
 	
 	public OI() {
 		percentDriveButton.whenPressed(new ChangeDriveCommand(TalonControlMode.PercentVbus));
@@ -40,8 +38,6 @@ public class OI {
 		eStopButton.whenPressed(new SoftEStopCommand());
 
 		reverseClimbButton.whileHeld(new ClimbCommand(-1));
-		
-		deleteThisButton.whenPressed(new UltraDriveCommand(400, .5));
 	}
 
 	//// CREATING BUTTONS

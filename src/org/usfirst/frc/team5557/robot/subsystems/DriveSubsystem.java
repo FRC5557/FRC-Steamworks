@@ -22,13 +22,12 @@ public class DriveSubsystem extends Subsystem {
 	private CANTalon leftRear = new CANTalon(RobotMap.LEFT_REAR_MOTOR);
 	private CANTalon rightFront = new CANTalon(RobotMap.RIGHT_FRONT_MOTOR);
 	private CANTalon rightRear = new CANTalon(RobotMap.RIGHT_REAR_MOTOR);
-	public double ROTATIONCORRECTION = .2;
 	private RobotDrive robotDrive = new RobotDrive(leftFront, leftRear, rightFront, rightRear);
 
 	public DriveSubsystem() {
-		robotDrive.setInvertedMotor(MotorType.kFrontLeft, true);
+		robotDrive.setInvertedMotor(MotorType.kFrontLeft, false);
+		robotDrive.setInvertedMotor(MotorType.kRearLeft, false);
 		robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
-		robotDrive.setInvertedMotor(MotorType.kRearLeft, true);
 		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
 		
 		// Set up Talon SRX controllers
@@ -93,7 +92,7 @@ public class DriveSubsystem extends Subsystem {
 			curvature = (radius / abs_radius) * Math.exp(-abs_radius / RobotMap.BASE_CURVATURE_CONSTANT);
 		}*/
 		
-		robotDrive.arcadeDrive(magnitude, turn);
+		robotDrive.mecanumDrive_Cartesian(0, magnitude, turn, 0);
 	}
 
 	public void stop() {
@@ -101,24 +100,10 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void drive() {
-		double X = OI.driveStick.getX();
+		double X = -OI.driveStick.getX();
 		double Y = -OI.driveStick.getY();
-		double rotation = OI.driveStick.getZ();
+		double rotation = OI.driveStick.getTwist();
 		
-		double theta = -Math.atan2(Y, X) - (Math.PI/2);
-		
-		double direction = Math.toDegrees(theta);
-		
-		if(direction < 0) {
-			direction += 360;
-		}
-		
-		SmartDashboard.putNumber("Atan", -Math.atan2(Y, X));
-		SmartDashboard.putNumber("Theta", theta);
-		SmartDashboard.putNumber("Direction", direction);
-
-		//robotDrive.mecanumDrive_Polar(Math.sqrt(Math.pow(X, 2) + Math.pow(Y, 2)), direction, rotation);
-		robotDrive.arcadeDrive(-Y, rotation + .5*OI.driveStick.getThrottle());
-		SmartDashboard.putNumber("Slider", .5*OI.driveStick.getThrottle());
+		robotDrive.mecanumDrive_Cartesian(X, Y, rotation, 0);
 	}
 }

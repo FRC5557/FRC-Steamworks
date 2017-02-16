@@ -14,11 +14,10 @@ public class RobotMap {
 	public static int PERCENT_DRIVE_BUTTON = 10;
 	public static int SPEED_DRIVE_BUTTON = 2;
 	public static int SHOOTER_BUTTON = 1;
-	public static int CLIMBER_BUTTON = 5;
+	public static int CLIMBER_BUTTON = 9;
 	public static int COLLECTOR_BUTTON = 7;
-	public static int REVERSE_CLIMBER_BUTTON = 3;
+	public static int REVERSE_CLIMBER_BUTTON = 11;
 	public static int EMERGENCY_STOP_BUTTON = 12;
-	public static int DELETE_THIS_BUTTON = 8;
 		
 	// Motor controllers are mapped here
 	public static final int LEFT_FRONT_MOTOR = 4;

@@ -3,6 +3,7 @@ package org.usfirst.frc.team5557.robot.commands;
 import org.usfirst.frc.team5557.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Fuel Shooter Command
@@ -16,7 +17,7 @@ public class ShootCommand extends Command {
 	public ShootCommand() {
 		requires(Robot.shooter);
 		timed = false;
-		speed = 1;
+		speed = 9.0 / 12.0;
 	}
 
 	public ShootCommand(double count) {
