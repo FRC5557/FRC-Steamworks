@@ -18,6 +18,7 @@ public class RobotMap {
 	public static int COLLECTOR_BUTTON = 7;
 	public static int REVERSE_CLIMBER_BUTTON = 11;
 	public static int EMERGENCY_STOP_BUTTON = 12;
+	public static int CAMERA_SWITCH = 4;
 		
 	// Motor controllers are mapped here
 	public static final int LEFT_FRONT_MOTOR = 4;
