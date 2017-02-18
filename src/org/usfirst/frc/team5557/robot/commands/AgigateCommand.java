@@ -14,7 +14,7 @@ public class AgigateCommand extends Command {
     }
 
     protected void execute() {
-    	Robot.shooter.agitate(0.5);
+    	Robot.shooter.agitate(-.3);
     }
 
     protected boolean isFinished() {

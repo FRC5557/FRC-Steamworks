@@ -26,7 +26,7 @@ public class OI {
 	public final Button agigateButton = new JoystickButton(driveStick, RobotMap.COLLECTOR_BUTTON);
 	
 	public OI() {
-		percentDriveButton.whenPressed(new ChangeDriveCommand(TalonControlMode.PercentVbus));
+		
 		// speedDriveButton.whenPressed(new
 		// ChangeDriveCommand(TalonControlMode.Speed));
 

@@ -18,8 +18,8 @@ public class SensorSubsystem extends Subsystem {
 	public SensorSubsystem() {
 		// Correctly initialize and set up encoders
 		for (MotorType m : MotorType.values()) {
-			Robot.drive.getTalon(m).configEncoderCodesPerRev(RobotMap.ENCODER_CODES_PER_REV);
 			Robot.drive.getTalon(m).setFeedbackDevice(RobotMap.TALON_FEEDBACK_DEVICE);
+			Robot.drive.getTalon(m).configEncoderCodesPerRev(RobotMap.ENCODER_CODES_PER_REV);
 			Robot.drive.getTalon(m).reverseSensor(false);
 			Robot.drive.getTalon(m).setProfile(RobotMap.ENCODER_PROFILE);
 			Robot.drive.getTalon(m).setF(RobotMap.PID_FEEDFORWARD);
@@ -36,6 +36,9 @@ public class SensorSubsystem extends Subsystem {
 	 */
 	public double getUltra() {
 		return ultra.getVoltage() * RobotMap.MAXBOTIX_VOLTAGE_CONSTANT_MM;
+	}
+	public double checkEncoders(){
+		return Robot.drive.getTalon(MotorType.kRearLeft).getEncVelocity();
 	}
 
 	public void resetEncoders() {

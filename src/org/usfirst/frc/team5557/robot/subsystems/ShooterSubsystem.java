@@ -32,7 +32,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 	
 	public void agitate(double speed) {
-		collector.set(Math.abs(speed));
+		collector.set(speed);
 	}
 	
 	public void stopCollector() {

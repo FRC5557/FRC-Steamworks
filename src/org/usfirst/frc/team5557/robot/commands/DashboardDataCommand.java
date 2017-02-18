@@ -19,8 +19,7 @@ public class DashboardDataCommand extends Command {
 		SmartDashboard.putNumber("Accel_X", Robot.sensors.getAx());
 		SmartDashboard.putNumber("Gyro_X", Robot.sensors.getGx());
 		SmartDashboard.putNumber("Gyro_Y", Robot.sensors.getGy());
-		SmartDashboard.putNumber("Encoder FL", Robot.sensors.getDis(MotorType.kFrontLeft));
-		SmartDashboard.putNumber("Encoder FR", Robot.sensors.getDis(MotorType.kFrontRight));
+		
     }
 
     protected boolean isFinished() {

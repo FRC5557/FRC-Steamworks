@@ -9,9 +9,11 @@ import org.usfirst.frc.team5557.robot.subsystems.*;
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -52,22 +54,9 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Left DS No Shoot", new AutoLeftGroup(false));
 		chooser.addObject("Right DS No Shoot", new AutoRightGroup(false));
 		SmartDashboard.putData("Autonomous Programs", chooser);
-		
 		dashboardDataCommand = new DashboardDataCommand();
 		
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("Gears", 0);
-		camera.setResolution(320, 240);
-		camera.setFPS(30);
-		
-		UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture("Climber", 2);
-		camera2.setResolution(320, 240);
-		camera2.setFPS(30);
-		
-		AxisCamera axis = CameraServer.getInstance().addAxisCamera("Shooter", "10.55.57.11");
-		axis.setResolution(320, 240);
-		axis.setFPS(30);
-		
-	
+
 	}
 
 	/**
