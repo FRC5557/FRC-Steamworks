@@ -15,6 +15,10 @@ public class DashboardDataCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putNumber("MaxBotix Ultrasonic", Robot.sensors.getUltra());
+    	SmartDashboard.putNumber("Encoder RL", Robot.sensors.getDis(MotorType.kRearLeft));
+    	SmartDashboard.putNumber("Encoder RR", Robot.sensors.getDis(MotorType.kRearRight));
+    	SmartDashboard.putNumber("Encoder FL", Robot.sensors.getDis(MotorType.kFrontLeft));
+    	SmartDashboard.putNumber("Encoder FR", Robot.sensors.getDis(MotorType.kFrontRight));
     }
 
     protected boolean isFinished() {

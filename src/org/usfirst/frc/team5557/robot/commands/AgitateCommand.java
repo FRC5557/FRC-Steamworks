@@ -7,14 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AgigateCommand extends Command {
+public class AgitateCommand extends Command {
 
-    public AgigateCommand() {
+    public AgitateCommand() {
     	//This doesn't require Shooter subsystem at the moment because then we can't run shooting and agitating simultaneously
     }
 
     protected void execute() {
-    	Robot.shooter.agitate(-.3);
+    	Robot.shooter.agitate(.3);
     }
 
     protected boolean isFinished() {

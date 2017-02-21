@@ -26,8 +26,8 @@ public class OI {
 	
 	public OI() {
 		autoGearButton.whenPressed(new UltraDriveCommand(400,.6));
-		shooterButton.whileHeld(new ShootCommand());
-		agitateButton.whileHeld(new AgigateCommand());
+		shooterButton.whileHeld(new ShootCommandGroup());
+		agitateButton.whileHeld(new AgitateCommand());
 		climberButton.whileHeld(new ClimbCommand());
 		eStopButton.whenPressed(new SoftEStopCommand());
 		reverseClimbButton.whileHeld(new ClimbCommand(-1));

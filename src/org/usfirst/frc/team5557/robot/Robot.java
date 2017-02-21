@@ -3,17 +3,21 @@ package org.usfirst.frc.team5557.robot;
 
 import org.opencv.core.Mat;
 import org.usfirst.frc.team5557.robot.commands.DashboardDataCommand;
-import org.usfirst.frc.team5557.robot.commands.autogroups.*;
-import org.usfirst.frc.team5557.robot.subsystems.*;
+import org.usfirst.frc.team5557.robot.commands.autogroups.AutoLeftGroup;
+import org.usfirst.frc.team5557.robot.commands.autogroups.AutoRightGroup;
+import org.usfirst.frc.team5557.robot.commands.autogroups.AutoStraightGroup;
+import org.usfirst.frc.team5557.robot.subsystems.ClimberSubsystem;
+import org.usfirst.frc.team5557.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team5557.robot.subsystems.SensorSubsystem;
+import org.usfirst.frc.team5557.robot.subsystems.ShooterSubsystem;
 
-import edu.wpi.cscore.AxisCamera;
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -56,9 +60,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autonomous Programs", chooser);
 		dashboardDataCommand = new DashboardDataCommand();
 		
-		CameraServer.getInstance().startAutomaticCapture(0);
-		CameraServer.getInstance().startAutomaticCapture(1);
-
 		Thread camera = new Thread(() -> {
 			boolean displaycam1 = true;
 			UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture("Cam1",0);
@@ -72,7 +73,7 @@ public class Robot extends IterativeRobot {
 			CvSource switcher = CameraServer.getInstance().putVideo("Switcher",160,120);
 			Mat image = new Mat();
 			while(!Thread.interrupted()) {
-				if (oi.getRawButton(RobotMap.CAMERA_SWITCH)){
+				if (oi.driveStick.getRawButton(RobotMap.CAMERA_SWITCH)){
 					displaycam1 = !displaycam1;
 				}
 				if(displaycam1) {
@@ -89,6 +90,7 @@ public class Robot extends IterativeRobot {
 			switcher.putFrame(image);
 		});
 		camera.start();
+		
 	}
 
 	/**

@@ -23,7 +23,7 @@ public class SensorSubsystem extends Subsystem {
 			Robot.drive.getTalon(m).setF(RobotMap.PID_FEEDFORWARD);
 			Robot.drive.getTalon(m).setPID(RobotMap.PID_PROPORTIONAL, RobotMap.PID_INTEGRAL, RobotMap.PID_DERIVATIVE);
 			Robot.drive.getTalon(m).setCloseLoopRampRate(RobotMap.CLOSED_LOOP_RAMP_RATE);
-			Robot.drive.getTalon(m).setIzone(RobotMap.INTEGRAL_ZONE);
+			//Robot.drive.getTalon(m).setIzone(RobotMap.INTEGRAL_ZONE);
 		}
 	}
 

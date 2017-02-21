@@ -18,6 +18,7 @@ public class ShootCommand extends Command {
 		requires(Robot.shooter);
 		timed = false;
 		speed = .9;
+		
 	}
 
 	public ShootCommand(double count) {
@@ -44,7 +45,7 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.shooter.agitate(-.5);
+		//Robot.shooter.agitate(.3);
 		Robot.shooter.shoot(speed);
 		}
 
@@ -58,7 +59,7 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void end() {
-		Robot.shooter.stopCollector();
+		//Robot.shooter.stopCollector();
 		Robot.shooter.stop();
 	}
 }
