@@ -31,11 +31,11 @@ public class DriveSubsystem extends Subsystem {
 		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
 		
 		// Set up Talon SRX controllers
-		/**
+
 		for (MotorType m : MotorType.values()) {
 			getTalon(m).configNominalOutputVoltage(+RobotMap.NOMINAL_OUTPUT_VOLTAGE, -RobotMap.NOMINAL_OUTPUT_VOLTAGE);
 			getTalon(m).configPeakOutputVoltage(+RobotMap.PEAK_OUTPUT_VOLTAGE, -RobotMap.PEAK_OUTPUT_VOLTAGE);
-		}**/
+		}
 
 		// This suppresses the "Output not frequent enough" message
 		robotDrive.setSafetyEnabled(false);
@@ -58,10 +58,6 @@ public class DriveSubsystem extends Subsystem {
 		default:
 			return leftFront;
 		}
-	}
-	public void changeVolt(double high,MotorType m){
-		getTalon(m).configNominalOutputVoltage(+RobotMap.NOMINAL_OUTPUT_VOLTAGE, -RobotMap.NOMINAL_OUTPUT_VOLTAGE);
-		getTalon(m).configPeakOutputVoltage(+high, -high);
 	}
 	public void switchMode(TalonControlMode mode) {
 		for (MotorType m : MotorType.values()) {
@@ -96,7 +92,7 @@ public class DriveSubsystem extends Subsystem {
 			curvature = (radius / abs_radius) * Math.exp(-abs_radius / RobotMap.BASE_CURVATURE_CONSTANT);
 		}*/
 		
-		robotDrive.mecanumDrive_Cartesian(0, magnitude, turn, 0);
+		robotDrive.arcadeDrive(turn,magnitude);
 	}
 
 	public void stop() {
@@ -107,9 +103,7 @@ public class DriveSubsystem extends Subsystem {
 		double X = -OI.driveStick.getX();
 		double Y = -OI.driveStick.getY();
 		double rotation = OI.driveStick.getTwist();
-		
-		//robotDrive.mecanumDrive_Cartesian(X, Y, rotation, 0);
+
 		robotDrive.arcadeDrive(rotation,Y);
-		SmartDashboard.putNumber("Rotation",rotation);
 	}
 }

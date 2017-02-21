@@ -17,26 +17,19 @@ public class OI {
 	public static final Joystick driveStick = new Joystick(RobotMap.JOYSTICK_DRIVE);
 
 	// Buttons defined here
-	public final Button percentDriveButton = new JoystickButton(driveStick, RobotMap.PERCENT_DRIVE_BUTTON);
-	public final Button speedDriveButton = new JoystickButton(driveStick, RobotMap.SPEED_DRIVE_BUTTON);
+	public final Button autoGearButton = new JoystickButton(driveStick, RobotMap.AUTOMATIC_GEAR_PLACEMENT_BUTTON);
 	public final Button shooterButton = new JoystickButton(driveStick, RobotMap.SHOOTER_BUTTON);
 	public final Button climberButton = new JoystickButton(driveStick, RobotMap.CLIMBER_BUTTON);
 	public final Button eStopButton = new JoystickButton(driveStick, RobotMap.EMERGENCY_STOP_BUTTON);
 	public final Button reverseClimbButton = new JoystickButton(driveStick, RobotMap.REVERSE_CLIMBER_BUTTON);
-	public final Button agigateButton = new JoystickButton(driveStick, RobotMap.COLLECTOR_BUTTON);
+	public final Button agitateButton = new JoystickButton(driveStick, RobotMap.COLLECTOR_BUTTON);
 	
 	public OI() {
-		
-		// speedDriveButton.whenPressed(new
-		// ChangeDriveCommand(TalonControlMode.Speed));
-
+		autoGearButton.whenPressed(new UltraDriveCommand(400,.6));
 		shooterButton.whileHeld(new ShootCommand());
-		agigateButton.whileHeld(new AgigateCommand());
-		
+		agitateButton.whileHeld(new AgigateCommand());
 		climberButton.whileHeld(new ClimbCommand());
-
 		eStopButton.whenPressed(new SoftEStopCommand());
-
 		reverseClimbButton.whileHeld(new ClimbCommand(-1));
 	}
 

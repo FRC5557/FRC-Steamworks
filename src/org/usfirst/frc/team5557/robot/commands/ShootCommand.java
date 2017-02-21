@@ -36,6 +36,7 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void initialize() {
+		Robot.shooter.shoot(speed);
 		if (timed) {
 			setTimeout(count);
 		}
@@ -43,6 +44,7 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void execute() {
+		Robot.shooter.agitate(-.5);
 		Robot.shooter.shoot(speed);
 		}
 
@@ -56,6 +58,7 @@ public class ShootCommand extends Command {
 
 	@Override
 	protected void end() {
+		Robot.shooter.stopCollector();
 		Robot.shooter.stop();
 	}
 }

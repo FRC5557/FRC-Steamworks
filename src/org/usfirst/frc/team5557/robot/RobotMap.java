@@ -11,8 +11,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 public class RobotMap {
 	// Driver input devices are mapped here
 	public static int JOYSTICK_DRIVE = 0;
-	public static int PERCENT_DRIVE_BUTTON = 3;
-	public static int SPEED_DRIVE_BUTTON = 2;
+	public static int AUTOMATIC_GEAR_PLACEMENT_BUTTON = 10;
 	public static int SHOOTER_BUTTON = 1;
 	public static int CLIMBER_BUTTON = 7;
 	public static int COLLECTOR_BUTTON = 9;
@@ -34,7 +33,7 @@ public class RobotMap {
 	public static final int ULTRA_ANALOG = 0;
 
 	// Constants for encoders connected to Talon SRX
-	public static final float PEAK_OUTPUT_VOLTAGE = 12f;
+	public static final float PEAK_OUTPUT_VOLTAGE = 10f;
 	public static final float NOMINAL_OUTPUT_VOLTAGE = 0f;
 	public static final int ENCODER_CODES_PER_REV = 40;
 	public static final FeedbackDevice TALON_FEEDBACK_DEVICE = FeedbackDevice.QuadEncoder;
@@ -43,8 +42,11 @@ public class RobotMap {
 	public static final double PID_PROPORTIONAL = 0.1;
 	public static final double PID_INTEGRAL = 0;
 	public static final double PID_DERIVATIVE = 0;
+	public static final double CLOSED_LOOP_RAMP_RATE = 0;
+	public static final double INTEGRAL_ZONE = 0;
 
 	// Additional constants are placed here
-	public static final double MAXBOTIX_VOLTAGE_CONSTANT_MM = 1024f;
+	public static final float MAXBOTIX_VOLTAGE_CONSTANT_MM = 1024f;
 	public static final double BASE_CURVATURE_CONSTANT = 20.36;
+	public static final double ENCODER_CONVERSION = 6.3662;//needs to be updated
 }

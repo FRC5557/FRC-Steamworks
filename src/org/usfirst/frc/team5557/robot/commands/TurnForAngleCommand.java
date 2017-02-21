@@ -27,7 +27,7 @@ public class TurnForAngleCommand extends Command {
 	 */
 	@Override
 	protected void execute() {
-		Robot.drive.manualDrive(.5, angle);
+		Robot.drive.manualDrive(0,.3*(angle/Math.abs(angle)));
 	}
 
 	/**
@@ -37,11 +37,10 @@ public class TurnForAngleCommand extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-		if (Robot.sensors.getDis(MotorType.kFrontLeft) >= ((angle / 360) * (8 * Math.PI))) {
+		if (Robot.sensors.getDis(MotorType.kFrontLeft) >= ((Math.abs(angle) / 360) * (8 * Math.PI))) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	@Override

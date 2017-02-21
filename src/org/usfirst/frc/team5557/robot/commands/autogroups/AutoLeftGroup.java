@@ -13,15 +13,12 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class AutoLeftGroup extends CommandGroup {
 	public AutoLeftGroup(boolean shoot) {
-		addSequential(new DriveForDistanceCommand(100));// Drive forward
-		addSequential(new TurnForAngleCommand(1));// Turn towards peg
-		addSequential(new UltraDriveCommand(1, .5));// Drive towards peg until
+		addSequential(new DriveForDistanceCommand(94));// Drive forward 7 ft 9 and 1/4 inch
+		addSequential(new TurnForAngleCommand(50));// Turn towards peg
+		addSequential(new UltraDriveCommand(400, .6));// Drive towards peg until
 												// certain distance
-		addSequential(new WaitCommand(100));// Extra time to make sure gear gets
+		addSequential(new WaitCommand(1000));// Extra time to make sure gear gets
 											// on peg
-		addSequential(new DriveForDistanceCommand(-1));// reverse out of airship
-														// slot
-		addSequential(new TurnForAngleCommand(1));// turn towards boiler
 
 		if (shoot) {
 			// TODO vision processing

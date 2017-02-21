@@ -2,7 +2,6 @@ package org.usfirst.frc.team5557.robot.subsystems;
 
 import org.usfirst.frc.team5557.robot.Robot;
 import org.usfirst.frc.team5557.robot.RobotMap;
-import org.usfirst.frc.team5557.robot.util.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
@@ -13,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class SensorSubsystem extends Subsystem {
 	public AnalogInput ultra = new AnalogInput(RobotMap.ULTRA_ANALOG);
-	public ADIS16448_IMU imu = new ADIS16448_IMU();
 
 	public SensorSubsystem() {
 		// Correctly initialize and set up encoders
@@ -24,6 +22,8 @@ public class SensorSubsystem extends Subsystem {
 			Robot.drive.getTalon(m).setProfile(RobotMap.ENCODER_PROFILE);
 			Robot.drive.getTalon(m).setF(RobotMap.PID_FEEDFORWARD);
 			Robot.drive.getTalon(m).setPID(RobotMap.PID_PROPORTIONAL, RobotMap.PID_INTEGRAL, RobotMap.PID_DERIVATIVE);
+			Robot.drive.getTalon(m).setCloseLoopRampRate(RobotMap.CLOSED_LOOP_RAMP_RATE);
+			Robot.drive.getTalon(m).setIzone(RobotMap.INTEGRAL_ZONE);
 		}
 	}
 
@@ -36,9 +36,6 @@ public class SensorSubsystem extends Subsystem {
 	 */
 	public double getUltra() {
 		return ultra.getVoltage() * RobotMap.MAXBOTIX_VOLTAGE_CONSTANT_MM;
-	}
-	public double checkEncoders(){
-		return Robot.drive.getTalon(MotorType.kRearLeft).getEncVelocity();
 	}
 
 	public void resetEncoders() {
@@ -53,10 +50,10 @@ public class SensorSubsystem extends Subsystem {
 	 */
 	public double getDis() {
 		// double UL = Robot.drive.getTalon("UL").getEncPosition();
-		double BL = Robot.drive.getTalon(MotorType.kRearLeft).getEncPosition();
+		double BL = Math.abs(Robot.drive.getTalon(MotorType.kRearLeft).getEncPosition());
 		// double UR = Robot.drive.getTalon("UR").getEncPosition();
 		// double BR = Robot.drive.getTalon("BR").getEncPosition();
-		double avgDis = BL;
+		double avgDis = (BL)/RobotMap.ENCODER_CONVERSION;
 		return avgDis;
 	}
 
@@ -68,25 +65,4 @@ public class SensorSubsystem extends Subsystem {
 		return Robot.drive.getTalon(m).getEncVelocity();
 	}
 
-	public double getAx() {
-		return imu.getAccelX();
-	}
-
-	public double getAy() {
-		return imu.getAccelY();
-	}
-
-	public double getGx() {
-		return imu.getAngleX();
-	}
-
-	public double getGy() {
-		return imu.getAngleY();
-	}
-
-	// This method doens't seem to work properly
-	@Deprecated
-	public ADIS16448_IMU getCompass() {
-		return imu;
-	}
 }

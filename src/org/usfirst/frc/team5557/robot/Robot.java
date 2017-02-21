@@ -56,7 +56,39 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autonomous Programs", chooser);
 		dashboardDataCommand = new DashboardDataCommand();
 		
+		CameraServer.getInstance().startAutomaticCapture(0);
+		CameraServer.getInstance().startAutomaticCapture(1);
 
+		Thread camera = new Thread(() -> {
+			boolean displaycam1 = true;
+			UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture("Cam1",0);
+			cam1.setResolution(160,120);
+			cam1.setFPS(10);
+			UsbCamera cam2 = CameraServer.getInstance().startAutomaticCapture("Cam2",1);
+			cam2.setResolution(160,120);
+			cam2.setFPS(10);
+			CvSink cam1sink = CameraServer.getInstance().getVideo(cam1);
+			CvSink cam2sink = CameraServer.getInstance().getVideo(cam2);
+			CvSource switcher = CameraServer.getInstance().putVideo("Switcher",160,120);
+			Mat image = new Mat();
+			while(!Thread.interrupted()) {
+				if (oi.getRawButton(RobotMap.CAMERA_SWITCH)){
+					displaycam1 = !displaycam1;
+				}
+				if(displaycam1) {
+					cam1sink.setEnabled(true);
+					cam2sink.setEnabled(false);
+					cam1sink.grabFrame(image);
+				}
+				else{
+					cam1sink.setEnabled(false);
+					cam2sink.setEnabled(true);
+					cam2sink.grabFrame(image);
+				}
+			}
+			switcher.putFrame(image);
+		});
+		camera.start();
 	}
 
 	/**
@@ -87,12 +119,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//autonomousCommand = chooser.getSelected();
-		autonomousCommand = new AutoStraightGroup(false);
+		autonomousCommand = chooser.getSelected();
+
 		// Schedule the autonomous command
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 		}
+		drive.switchMode(TalonControlMode.Position);
 		dashboardDataCommand.start();
 	}
 
@@ -113,6 +146,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		drive.switchMode(TalonControlMode.PercentVbus);
 		dashboardDataCommand.start();
 	}
 

@@ -11,7 +11,7 @@ public class AutoStraightGroup extends CommandGroup {
 	public AutoStraightGroup(boolean shoot) {
 		addSequential(new UltraDriveCommand(400, .6));// Drive towards peg up until
 													// certain distance
-		// addSequential(new WaitCommand(100));// Extra time for gear to get on
+		addSequential(new WaitCommand(1000));// Extra time for gear to get on
 		// peg
 		// addSequential(new AutoLinearDriveCommand(-1));// Reverse out of
 		// airship
